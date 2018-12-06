@@ -18,6 +18,13 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+
+            // OAuth服务提供方
+            $table->string('provider');
+            // 第三方OAuth获取的用户唯一ID
+            $table->string('provider_id');
+            // 第三方OAuth获取的用户头像
+            $table->text('avatar');
             $table->rememberToken();
             $table->timestamps();
         });

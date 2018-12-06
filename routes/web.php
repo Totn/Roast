@@ -11,6 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'Web\AppController@getApp')
+->middleware('auth');
+
+Route::get('/login', 'Web\AppController@getLogin')
+->name('login')
+->middleware('guest');
+
+// 登录证认证路由
+Route::get('auth/{social}', 'Web\AuthenticationController@getSocialRedirect')
+->middleware('guest');
+
+Route::get('/auth/{social}/callback', 'Web\AuthenticationController@getSocialCallback')
+->middleware('guest');
