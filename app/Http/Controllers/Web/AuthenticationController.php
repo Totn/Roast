@@ -45,7 +45,7 @@ class AuthenticationController extends Controller
             // 若该用户不存在则保存到User表
             $newUser = new User();
 
-            $newUser->name = $socialUser->getName();
+            $newUser->name = $socialUser->getName() ?: '';
             $newUser->email = $socialUser->getEmail() == '' ? '' : $socialUser->getEmail();
             $newUser->avatar = $socialUser->getAvatar();
             $newUser->password = '';
