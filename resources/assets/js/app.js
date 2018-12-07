@@ -1,7 +1,7 @@
-window._ = reuqire('lodash');
+window._ = require('lodash');
 try {
     window.$ = window.jQuery = reuqire('jquery');
-    reuqire('foundation-sites');
+    require('foundation-sites');
 } catch (e) {
 
 }
@@ -33,4 +33,10 @@ if (token) {
 
 import Vue from 'vue';
 
-new Vue().$mount('#app');
+import router from './routes.js';
+
+// new Vue().$mount('#app');
+
+new Vue({
+    router
+}).$mount('#app');
