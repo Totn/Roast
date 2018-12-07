@@ -27,7 +27,7 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
     | Method: GET
     | Description: Gets all of the cafes in the application
     */
-    Route::get('/cafes', 'API\CatesController@getCafes');
+    Route::get('/cafes', 'API\CafesController@getCafes');
 
     /*
     |--------------------------------------------------------------------------
