@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 13);
+/******/ 	return __webpack_require__(__webpack_require__.s = 14);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,7 +70,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(8);
+var bind = __webpack_require__(9);
 var isBuffer = __webpack_require__(21);
 
 /*global toString:true*/
@@ -843,10 +843,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(9);
+    adapter = __webpack_require__(10);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(9);
+    adapter = __webpack_require__(10);
   }
   return adapter;
 }
@@ -12083,6 +12083,12 @@ module.exports = Vue;
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(20);
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -12098,7 +12104,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12109,7 +12115,7 @@ var settle = __webpack_require__(24);
 var buildURL = __webpack_require__(26);
 var parseHeaders = __webpack_require__(27);
 var isURLSameOrigin = __webpack_require__(28);
-var createError = __webpack_require__(10);
+var createError = __webpack_require__(11);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(29);
 
 module.exports = function xhrAdapter(config) {
@@ -12285,7 +12291,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12310,7 +12316,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12322,7 +12328,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12348,15 +12354,15 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(14);
-module.exports = __webpack_require__(66);
+__webpack_require__(15);
+module.exports = __webpack_require__(69);
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12365,10 +12371,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__routes_js__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_js__ = __webpack_require__(63);
-window._ = __webpack_require__(15);
+window._ = __webpack_require__(16);
 try {
     window.$ = window.jQuery = reuqire('jquery');
-    __webpack_require__(17);
+    __webpack_require__(18);
 } catch (e) {}
 
 /**
@@ -12377,7 +12383,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(19);
+window.axios = __webpack_require__(8);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -12407,7 +12413,7 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 }).$mount('#app');
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -29519,10 +29525,10 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(16)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(17)(module)))
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -29550,7 +29556,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29589,18 +29595,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Tooltip", function() { return Tooltip; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResponsiveAccordionTabs", function() { return ResponsiveAccordionTabs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Foundation", function() { return Foundation; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
+var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 
 
 function _typeof(obj) {
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
+  if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
+    _typeof = function _typeof(obj) {
+      return typeof obj === "undefined" ? "undefined" : _typeof2(obj);
     };
   } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof2(obj);
     };
   }
 
@@ -29669,7 +29677,7 @@ function _assertThisInitialized(self) {
 }
 
 function _possibleConstructorReturn(self, call) {
-  if (call && (typeof call === "object" || typeof call === "function")) {
+  if (call && ((typeof call === "undefined" ? "undefined" : _typeof2(call)) === "object" || typeof call === "function")) {
     return call;
   }
 
@@ -29722,7 +29730,6 @@ function rtl() {
  * @returns {String} - unique id
  */
 
-
 function GetYoDigits(length, namespace) {
   length = length || 6;
   return Math.round(Math.pow(36, length + 1) - Math.random() * Math.pow(36, length)).toString(36).slice(1) + (namespace ? "-".concat(namespace) : '');
@@ -29735,7 +29742,6 @@ function GetYoDigits(length, namespace) {
  * @param {String} str - string to escape.
  * @returns {String} - escaped string
  */
-
 
 function RegExpEscape(str) {
   return str.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
@@ -29779,7 +29785,6 @@ function transitionend($elem) {
  * @returns {String} - event type that should or will be triggered.
  */
 
-
 function onLoad($elem, handler) {
   var didLoad = document.readyState === 'complete';
   var eventType = (didLoad ? '_didLoad' : 'load') + '.zf.util.onLoad';
@@ -29813,7 +29818,6 @@ function onLoad($elem, handler) {
  * - {Boolean} [false] ignoreReappear - also ignore when the mouse reappeared outside of the element it left.
  * @returns {Function} - filtered handler to use to listen on the `mouseleave` event.
  */
-
 
 function ignoreMousedisappear(handler) {
   var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
@@ -30135,7 +30139,6 @@ var Foundation = {
      * @event Plugin#init
      */
 
-
     plugin.$element.trigger("init.zf.".concat(pluginName));
 
     this._uuids.push(plugin.uuid);
@@ -30372,7 +30375,6 @@ window.Foundation = Foundation; // Polyfill for requestAnimationFrame
    * Polyfill for performance.now, required by rAF
    */
 
-
   if (!window.performance || !window.performance.now) {
     window.performance = {
       start: Date.now(),
@@ -30499,7 +30501,6 @@ function OverlapArea(element, parent, lrOnly, tbOnly, ignoreBottom) {
  * TODO - if element is window, return only those values.
  */
 
-
 function GetDimensions(elem) {
   elem = elem.length ? elem[0] : elem;
 
@@ -30551,7 +30552,6 @@ function GetDimensions(elem) {
  * @param {Boolean} isOverflow - if a collision event is detected, sets to true to default the element to full width - any desired offset.
  * TODO alter/rewrite to work with `em` values as well/instead of pixels
  */
-
 
 function GetOffsets(element, anchor, position, vOffset, hOffset, isOverflow) {
   console.log("NOTE: GetOffsets is deprecated in favor of GetExplicitOffsets and will be removed in 6.5");
@@ -30931,7 +30931,6 @@ function Move(duration, elem, fn) {
  * @param {Function} cb - Callback to run when animation is finished.
  */
 
-
 function animate(isIn, element, animation, cb) {
   element = __WEBPACK_IMPORTED_MODULE_0_jquery___default()(element).eq(0);
   if (!element.length) return;
@@ -31032,7 +31031,8 @@ var Nest = {
 function Timer(elem, options, cb) {
   var _this = this,
       duration = options.duration,
-      //options is an object for easily adding features later.
+
+  //options is an object for easily adding features later.
   nameSpace = Object.keys(elem.data())[0] || 'timer',
       remain = -1,
       start,
@@ -31056,7 +31056,6 @@ function Timer(elem, options, cb) {
     timer = setTimeout(function () {
       if (options.infinite) {
         _this.restart(); //rerun the timer.
-
       }
 
       if (cb && typeof cb === 'function') {
@@ -31190,14 +31189,12 @@ function () {
  * values, and do not add event handlers directly.  *
  ****************************************************/
 
-
 Touch.setupSpotSwipe = function ($$$1) {
   $$$1.spotSwipe = new SpotSwipe($$$1);
 };
 /****************************************************
  * Method for adding pseudo drag events to elements *
  ***************************************************/
-
 
 Touch.setupTouchHandler = function ($$$1) {
   $$$1.fn.addTouch = function () {
@@ -31386,7 +31383,7 @@ Triggers.Initializers.addClosemeListener = function (pluginName) {
   if (pluginName) {
     if (typeof pluginName === 'string') {
       plugNames.push(pluginName);
-    } else if (_typeof(pluginName) === 'object' && typeof pluginName[0] === 'string') ; else {
+    } else if (_typeof(pluginName) === 'object' && typeof pluginName[0] === 'string') ;else {
       console.error('Plugin names must be strings');
     }
   }
@@ -31540,7 +31537,6 @@ function () {
      * Fires when the plugin has initialized.
      * @event Plugin#init
      */
-
 
     this.$element.trigger("init.zf.".concat(pluginName));
   }
@@ -32183,7 +32179,6 @@ function (_Plugin) {
  * Default settings for plugin
  */
 
-
 Abide.defaults = {
   /**
    * The default event to validate inputs. Checkboxes and radios validate immediately.
@@ -32437,7 +32432,6 @@ function (_Plugin) {
            * Fires when the plugin has deeplinked at pageload
            * @event Accordion#deeplink
            */
-
 
           _this2.$element.trigger('deeplink.zf.accordion', [$link, $anchor]);
         }
@@ -33651,7 +33645,6 @@ function (_Plugin) {
        * @event Drilldown#open
        */
 
-
       this.$element.trigger('open.zf.drilldown', [$elem]);
     }
     /**
@@ -34402,7 +34395,6 @@ function (_Positionable) {
        * @event Dropdown#show
        */
 
-
       this.$element.trigger('show.zf.dropdown', [this.$element]);
     }
     /**
@@ -34942,7 +34934,6 @@ function (_Plugin) {
        * @event Dropdownmenu#show
        */
 
-
       this.$element.trigger('show.zf.dropdownmenu', [$sub]);
     }
     /**
@@ -34986,7 +34977,6 @@ function (_Plugin) {
          * @event Dropdownmenu#hide
          */
 
-
         this.$element.trigger('hide.zf.dropdownmenu', [$toClose]);
       }
     }
@@ -35009,7 +34999,6 @@ function (_Plugin) {
 /**
  * Default settings for plugin
  */
-
 
 DropdownMenu.defaults = {
   /**
@@ -35418,7 +35407,6 @@ function (_Plugin) {
           * @event Equalizer#preequalizedrow
           */
 
-
         this.$element.trigger('preequalizedrow.zf.equalizer');
 
         for (var j = 0, lenJ = groupsILength - 1; j < lenJ; j++) {
@@ -35431,13 +35419,11 @@ function (_Plugin) {
           * @event Equalizer#postequalizedrow
           */
 
-
         this.$element.trigger('postequalizedrow.zf.equalizer');
       }
       /**
        * Fires when the heights have been applied
        */
-
 
       this.$element.trigger('postequalized.zf.equalizer');
     }
@@ -35460,7 +35446,6 @@ function (_Plugin) {
 /**
  * Default settings for plugin
  */
-
 
 Equalizer.defaults = {
   /**
@@ -35687,7 +35672,6 @@ function (_Plugin) {
        * @event Interchange#replaced
        */
       // this.$element.trigger('replaced.zf.interchange');
-
     }
     /**
      * Destroys an instance of interchange.
@@ -35706,7 +35690,6 @@ function (_Plugin) {
 /**
  * Default settings for plugin
  */
-
 
 Interchange.defaults = {
   /**
@@ -35848,7 +35831,6 @@ function (_Plugin) {
 /**
  * Default settings for plugin.
  */
-
 
 SmoothScroll.defaults = {
   /**
@@ -36145,7 +36127,6 @@ function (_Plugin) {
 /**
  * Default settings for plugin
  */
-
 
 Magellan.defaults = {
   /**
@@ -36580,7 +36561,6 @@ function (_Plugin) {
        * @event Offcanvas#opened
        */
 
-
       this.$element.trigger('opened.zf.offcanvas');
     }
     /**
@@ -36887,7 +36867,6 @@ function (_Plugin) {
         onImagesLoaded($images, this._prepareForOrbit.bind(this));
       } else {
         this._prepareForOrbit(); //hehe
-
       }
 
       if (this.options.bullets) {
@@ -36984,7 +36963,6 @@ function (_Plugin) {
         if (cb) {
           cb(max);
         } //fire callback with max height dimension.
-
       }
     }
     /**
@@ -37197,7 +37175,6 @@ function (_Plugin) {
             if (_this.options.autoPlay && !_this.timer.isPaused) {
               _this.timer.restart();
             } //do stuff?
-
           });
         } else {
           $curSlide.removeClass('is-active is-in').removeAttr('aria-live').hide();
@@ -37211,7 +37188,6 @@ function (_Plugin) {
         * Triggers when the slide has finished animating in.
         * @event Orbit#slidechange
         */
-
 
         this.$element.trigger('slidechange.zf.orbit', [$newSlide]);
       }
@@ -38085,7 +38061,6 @@ function (_Plugin) {
        * @event Reveal#open
        */
 
-
       this.$element.trigger('open.zf.reveal');
     }
     /**
@@ -38216,7 +38191,6 @@ function (_Plugin) {
 
         if (__WEBPACK_IMPORTED_MODULE_0_jquery___default()('.reveal:visible').length === 0) {
           _this._removeGlobalClasses(); // also remove .is-reveal-open from the html element when there is no opened reveal
-
         }
 
         Keyboard.releaseFocus(_this.$element);
@@ -38229,14 +38203,12 @@ function (_Plugin) {
         * @event Reveal#closed
         */
 
-
         _this.$element.trigger('closed.zf.reveal');
       }
       /**
       * Resets the modal content
       * This prevents a running video to keep going in the background
       */
-
 
       if (this.options.resetOnClose) {
         this.$element.html(this.$element.html());
@@ -38296,7 +38268,6 @@ function (_Plugin) {
 
       if (__WEBPACK_IMPORTED_MODULE_0_jquery___default()('.reveal:visible').length === 0) {
         this._removeGlobalClasses(); // also remove .is-reveal-open from the html element when there is no opened reveal
-
       }
     }
   }]);
@@ -38678,11 +38649,14 @@ function (_Plugin) {
           lOrT = vert ? 'top' : 'left',
           handleDim = $hndl[0].getBoundingClientRect()[hOrW],
           elemDim = this.$element[0].getBoundingClientRect()[hOrW],
-          //percentage of bar min/max value based on click or drag point
+
+      //percentage of bar min/max value based on click or drag point
       pctOfBar = this._pctOfBar(location),
-          //number of actual pixels to shift the handle, based on the percentage obtained above
+
+      //number of actual pixels to shift the handle, based on the percentage obtained above
       pxToMove = (elemDim - handleDim) * pctOfBar,
-          //percentage of bar to shift the handle
+
+      //percentage of bar to shift the handle
       movement = (percent(pxToMove, elemDim) * 100).toFixed(this.options.decimal); //fixing the decimal value for the location number, is passed to other methods as a fixed floating-point value
 
 
@@ -38695,9 +38669,11 @@ function (_Plugin) {
 
       if (isDbl) {
         var isLeftHndl = this.handles.index($hndl) === 0,
-            //empty variable, will be used for min-height/width for fill bar
+
+        //empty variable, will be used for min-height/width for fill bar
         dim,
-            //percentage w/h of the handle compared to the slider bar
+
+        //percentage w/h of the handle compared to the slider bar
         handlePct = ~~(percent(handleDim, elemDim) * 100); //if left handle, the math is slightly different than if it's the right handle, and the left/top property needs to be changed for the fill bar
 
         if (isLeftHndl) {
@@ -38710,7 +38686,6 @@ function (_Plugin) {
           if (cb && typeof cb === 'function') {
             cb();
           } //this is only needed for the initialization of 2 handled sliders
-
         } else {
           //just caching the value of the left/bottom handle's left/top property
           var handlePos = parseFloat(this.$handle[0].style[lOrT]); //calculate the new min-height/width for the fill bar. Use isNaN to prevent false positives for numbers <= 0
@@ -39649,7 +39624,8 @@ function (_Plugin) {
           mBtm = emCalc(this.options.marginBottom),
           topPoint = this.points ? this.points[0] : this.$anchor.offset().top,
           bottomPoint = this.points ? this.points[1] : topPoint + this.anchorHeight,
-          // topPoint = this.$anchor.offset().top || this.points[0],
+
+      // topPoint = this.$anchor.offset().top || this.points[0],
       // bottomPoint = topPoint + this.anchorHeight || this.points[1],
       winHeight = window.innerHeight;
 
@@ -39960,7 +39936,6 @@ function (_Plugin) {
            * @event Tabs#deeplink
            */
 
-
           _this2.$element.trigger('deeplink.zf.tabs', [$link, $anchor]);
         }
       }; //use browser to open a tab, if it exists in this tabset
@@ -40111,7 +40086,6 @@ function (_Plugin) {
        * @event Tabs#change
        */
 
-
       this.$element.trigger('change.zf.tabs', [$target, $targetContent]); //fire to children a mutation event
 
       $targetContent.find("[data-mutate]").trigger("mutateme.zf.trigger");
@@ -40169,7 +40143,6 @@ function (_Plugin) {
         * Fires when the plugin has successfully collapsed tabs.
         * @event Tabs#collapse
         */
-
 
         this.$element.trigger('collapse.zf.tabs', [$activeTab]);
       }
@@ -40783,7 +40756,7 @@ function (_Positionable) {
         this.$element.on('mousedown.zf.tooltip', function (e) {
           e.stopImmediatePropagation();
 
-          if (_this.isClick) ; else {
+          if (_this.isClick) ;else {
             _this.isClick = true;
 
             if ((_this.options.disableHover || !_this.$element.attr('tabindex')) && !_this.isActive) {
@@ -41348,9 +41321,8 @@ Foundation.plugin(ResponsiveAccordionTabs, 'ResponsiveAccordionTabs');
 
 //# sourceMappingURL=foundation.esm.js.map
 
-
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -51721,12 +51693,6 @@ return jQuery;
 
 
 /***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(20);
-
-/***/ }),
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -51734,7 +51700,7 @@ module.exports = __webpack_require__(20);
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(8);
+var bind = __webpack_require__(9);
 var Axios = __webpack_require__(22);
 var defaults = __webpack_require__(5);
 
@@ -51769,9 +51735,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(12);
+axios.Cancel = __webpack_require__(13);
 axios.CancelToken = __webpack_require__(36);
-axios.isCancel = __webpack_require__(11);
+axios.isCancel = __webpack_require__(12);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -51924,7 +51890,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(10);
+var createError = __webpack_require__(11);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -52357,7 +52323,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(33);
-var isCancel = __webpack_require__(11);
+var isCancel = __webpack_require__(12);
 var defaults = __webpack_require__(5);
 var isAbsoluteURL = __webpack_require__(34);
 var combineURLs = __webpack_require__(35);
@@ -52517,7 +52483,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(12);
+var Cancel = __webpack_require__(13);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -55681,8 +55647,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+// 首页路由中加载所有咖啡店的数据
+/* harmony default export */ __webpack_exports__["default"] = ({
+    // 在组件创建之后绑定的声明周期钩子created()被会调用，
+    // 我们将在这个钩子函数中分配起加载咖啡店的动作
+    created: function created() {
+        // 分发加载咖啡店的动作
+        this.$store.dispatch('loadCafes');
+        // 使用Vue存储器分发loadCafes动作来调用API
+        // 加载咖啡店，并将数据保存到cafes模块中的cafes数组
+    },
+
+
+    /**
+     * 定义组件的计算属性
+     */
+    computed: {
+        // 获取cafes加载状态
+        cafesLoadStatus: function cafesLoadStatus() {
+            return $this.$store.getters.getCafesLoadStatus;
+        },
+
+        // 获取cafes
+        cafes: function cafes() {
+            return $this.$store.getters.getCafes;
+        }
+    }
+});
 
 /***/ }),
 /* 47 */
@@ -55692,7 +55691,69 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "app" } })
+  return _c("div", { attrs: { id: "home" } }, [
+    _c(
+      "span",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.cafesLoadStatus == 1,
+            expression: "cafesLoadStatus == 1"
+          }
+        ]
+      },
+      [_vm._v("加载中...")]
+    ),
+    _vm._v(" "),
+    _c(
+      "span",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.cafesLoadStatus == 2,
+            expression: "cafesLoadStatus == 2"
+          }
+        ]
+      },
+      [_vm._v("数据加载成功！")]
+    ),
+    _vm._v(" "),
+    _c(
+      "span",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.cafesLoadStatus == 3,
+            expression: "cafesLoadStatus == 3"
+          }
+        ]
+      },
+      [_vm._v("数据加载失败！")]
+    ),
+    _vm._v(" "),
+    _c(
+      "ul",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.cafesLoadStatus,
+            expression: "cafesLoadStatus"
+          }
+        ]
+      },
+      _vm._l(_vm.cafes, function(cafe) {
+        return _c("li", { key: cafe.id }, [_vm._v(_vm._s(cafe.name))])
+      })
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -56099,7 +56160,7 @@ if (false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_cafes_js__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_cafes_js__ = __webpack_require__(66);
 /*
  |-------------------------------------------------------------------------------
  | VUEX store.js
@@ -58269,20 +58330,11 @@ var index_esm = {
 
 /***/ }),
 /* 66 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 67 */,
-/* 68 */,
-/* 69 */,
-/* 70 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return cafes; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__api_cafe_js__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__api_cafe_js__ = __webpack_require__(67);
 /*
 |-------------------------------------------------------------------------------
 | VUEX modules/cafes.js
@@ -58379,12 +58431,12 @@ var cafes = {
 };
 
 /***/ }),
-/* 71 */
+/* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_js__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_js__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 /**
  * Imports the Roast API URL from the config.
@@ -58429,7 +58481,7 @@ var cafes = {
 });
 
 /***/ }),
-/* 72 */
+/* 68 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -58451,6 +58503,12 @@ switch ("development") {
 var ROAST_CONFIG = {
     API_URL: api_url
 };
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
