@@ -61,6 +61,6 @@ class AuthenticationController extends Controller
         Auth::login($user);
 
         // 登陆成功重定向
-        return redirect('/');
+        return redirect('/#/home');
     }
 }
