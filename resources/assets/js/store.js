@@ -23,7 +23,7 @@ Vue.use(Vuex)
 /**
  * Imports all of the modules used in the appliction to build the data store.
  */
-import {cafes} from './modules/cafes.js'
+import { cafes } from './modules/cafes.js'
 export default new Vuex.Store({
     modules: {
         cafes

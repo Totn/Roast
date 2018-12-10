@@ -32,11 +32,11 @@
         computed: {
             // 获取cafes加载状态
             cafesLoadStatus () {
-                return $this.$store.getters.getCafesLoadStatus;
+                return this.$store.getters.getCafesLoadStatus;
             },
             // 获取cafes
             cafes () {
-                return $this.$store.getters.getCafes;
+                return this.$store.getters.getCafes;
             }
         }
     }

@@ -3,14 +3,14 @@
  */
 
 import { ROAST_CONFIG } from '../config.js';
-import Axios from 'axios';
+// import Axios from 'axios';
 
 export default {
     /**
      * GET /api/v1/cafes
      */
     getCafes: function () {
-        return Axios.get(ROAST_CONFIG.API_URL + '/cafes');
+        return axios.get(ROAST_CONFIG.API_URL + '/cafes');
     },
 
     /**
@@ -18,7 +18,7 @@ export default {
      * @param {int} cafeID 
      */
     getCafe: function (cafeID) {
-        return Axios.get(ROAST_CONFIG.API_URL + '/cafes/' + cafeID);
+        return axios.get(ROAST_CONFIG.API_URL + '/cafes/' + cafeID);
     },
 
     /**
@@ -30,7 +30,7 @@ export default {
      * @param {string} zip 
      */
     postAddNewCafe: function (name, address, city, state, zip) {
-        return Axios.post(ROAST_CONFIG.API_URL + '/cafes',
+        return axios.post(ROAST_CONFIG.API_URL + '/cafes',
         {
             name: name,
             address: address,

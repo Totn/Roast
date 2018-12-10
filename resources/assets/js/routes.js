@@ -24,22 +24,22 @@ export default new VueRouter({
             component: Vue.component('Home', require('./pages/Layout.vue')),
             children: [
                 {
-                    path: '/',
+                    path: 'home',
                     name: 'home',
                     component: Vue.component('Home', require('./pages/Home.vue'))
                 },
                 {
-                    path: '/cafes',
+                    path: 'cafes',
                     name: 'cafes',
                     component: Vue.component('Cafes', require('./pages/Cafes.vue'))
                 },
                 {
-                    path: '/cafes/new',
+                    path: 'cafes/new',
                     name: 'newcafe',
                     component: Vue.component('NewCafe', require('./pages/NewCafe.vue'))
                 },
                 {
-                    path: '/cafes/:id',
+                    path: 'cafes/:id',
                     name: 'cafe',
                     component: Vue.component('Cafe', require('./pages/Cafe.vue'))
                 }

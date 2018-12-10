@@ -70,7 +70,7 @@
 
         <ul class="links">
             <li>
-                <router-link :to="{ name: 'cafes' }"></router-link>
+                <router-link :to="{ name: 'cafes' }">Cafes</router-link>
             </li>
         </ul>
 
@@ -92,7 +92,9 @@ export default {
 
         // 从Vuex中获取用户信息
         user () {
-            return this.$store.getters.getUser;
+            return this.$store.getters.getUser || {
+                avatar: ''
+            };
         }
     }
 }

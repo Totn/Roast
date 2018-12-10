@@ -25,12 +25,12 @@ export const cafes = {
     /**
      * Defines the actions used to retrieve the data.
      */
-    actinons: {
+    actions: {
         loadCafes({commit}) {
             commit('setCafesLoadStatus', 1);
 
             CafeAPI.getCafes()
-                .then() (function (response) {
+                .then(function (response) {
                     commit('setCafes', response.data);
                     commit('setCafesLoadStatus', 2);
                 })
