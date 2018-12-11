@@ -3,7 +3,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cafe;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreCafeRequest;
 
 
 class CafesController extends Controller
@@ -44,7 +44,7 @@ class CafesController extends Controller
      | Method:         POST
      | Description:    Adds a new cafe to the application
     */
-    public function postNewCafe(Request $request)
+    public function postNewCafe(StoreCafeRequest $request)
     {
         $cafe = new Cafe();
         

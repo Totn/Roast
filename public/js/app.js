@@ -55663,9 +55663,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: {
         Navigation: __WEBPACK_IMPORTED_MODULE_0__components_global_Navigation_vue___default.a
     },
+    // 在组件创建之后绑定的声明周期钩子created()被会调用，
+    // 我们将在这个钩子函数中分配起加载咖啡店的动作
     created: function created() {
+        // 分发加载咖啡店的动作
         this.$store.dispatch('loadCafes');
-        // this.$store.dispatch('loadUser');
+        // 使用Vue存储器分发loadCafes动作来调用API
+        // 加载咖啡店，并将数据保存到cafes模块中的cafes数组
     }
 });
 
@@ -56063,17 +56067,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-// 首页路由中加载所有咖啡店的数据
-/* harmony default export */ __webpack_exports__["default"] = ({
-    // 在组件创建之后绑定的声明周期钩子created()被会调用，
-    // 我们将在这个钩子函数中分配起加载咖啡店的动作
-    created: function created() {
-        // 分发加载咖啡店的动作
-        this.$store.dispatch('loadCafes');
-        // 使用Vue存储器分发loadCafes动作来调用API
-        // 加载咖啡店，并将数据保存到cafes模块中的cafes数组
-    },
 
+/* harmony default export */ __webpack_exports__["default"] = ({
 
     /**
      * 定义组件的计算属性
@@ -56439,6 +56434,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -56447,8 +56450,85 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             address: '',
             city: '',
             state: '',
-            zip: ''
+            zip: '',
+            validations: {
+                name: {
+                    is_valid: true,
+                    text: ''
+                },
+                address: {
+                    is_valid: true,
+                    text: ''
+                },
+                city: {
+                    is_valid: true,
+                    text: ''
+                },
+                state: {
+                    is_valid: true,
+                    text: ''
+                },
+                zip: {
+                    is_valid: true,
+                    text: ''
+                }
+            }
         };
+    },
+
+    methods: {
+        submitNewCafe: function submitNewCafe() {
+            if (this.validateNewCafe()) {
+                this.$store.dispatch('addCafe', {
+                    name: this.name,
+                    address: this.address,
+                    city: this.city,
+                    state: this.state,
+                    zip: this.zip
+                });
+            }
+        },
+        validateNewCafe: function validateNewCafe() {
+            var validNewCafeForm = true;
+            this.validations.name.is_valid = true;
+            this.validations.address.is_valid = true;
+            this.validations.city.is_valid = true;
+            this.validations.state.is_valid = true;
+            this.validations.zip.is_valid = true;
+
+            this.validations.name.text = '';
+            this.validations.address.text = '';
+            this.validations.city.text = '';
+            this.validations.state.text = '';
+            this.validations.zip.text = '';
+
+            if (this.name.trim() === '') {
+                validNewCafeForm = false;
+                this.validations.name.is_valid = false;
+                this.validations.name.text = '请输入咖啡店的名字！';
+            }
+            if (this.address.trim() === '') {
+                validNewCafeForm = false;
+                this.validations.address.is_valid = false;
+                this.validations.address.text = '请输入咖啡店的地址！';
+            }
+            if (this.city.trim() === '') {
+                validNewCafeForm = false;
+                this.validations.city.is_valid = false;
+                this.validations.city.text = '请输入咖啡店所在城市！';
+            }
+            if (this.state.trim() === '') {
+                validNewCafeForm = false;
+                this.validations.state.is_valid = false;
+                this.validations.state.text = '请输入咖啡店所在省份！';
+            }
+            if (this.zip.trim() === '' || !this.zip.match(/(^\d{6}$)/)) {
+                validNewCafeForm = false;
+                this.validations.zip.is_valid = false;
+                this.validations.zip.text = '请输入有效的邮编地址！';
+            }
+            return validNewCafeForm;
+        }
     }
 });
 
@@ -56487,7 +56567,23 @@ var render = function() {
                   }
                 }
               })
-            ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.validations.name.is_valid,
+                    expression: "!validations.name.is_valid"
+                  }
+                ],
+                staticClass: "validation"
+              },
+              [_vm._v(_vm._s(_vm.validations.name.text))]
+            )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "large-12 medium-12 small-12 cell" }, [
@@ -56513,7 +56609,23 @@ var render = function() {
                   }
                 }
               })
-            ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.validations.address.is_valid,
+                    expression: "!validations.address.is_valid"
+                  }
+                ],
+                staticClass: "validation"
+              },
+              [_vm._v(_vm._s(_vm.validations.address.text))]
+            )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "large-12 medium-12 small-12 cell" }, [
@@ -56539,7 +56651,23 @@ var render = function() {
                   }
                 }
               })
-            ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.validations.city.is_valid,
+                    expression: "!validations.city.is_valid"
+                  }
+                ],
+                staticClass: "validation"
+              },
+              [_vm._v(_vm._s(_vm.validations.city.text))]
+            )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "large-12 medium-12 small-12 cell" }, [
@@ -56565,7 +56693,23 @@ var render = function() {
                   }
                 }
               })
-            ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.validations.state.is_valid,
+                    expression: "!validations.state.is_valid"
+                  }
+                ],
+                staticClass: "validation"
+              },
+              [_vm._v(_vm._s(_vm.validations.state.text))]
+            )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "large-12 medium-12 small-12 cell" }, [
@@ -56591,7 +56735,31 @@ var render = function() {
                   }
                 }
               })
-            ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.validations.zip.is_valid,
+                    expression: "!validations.zip.is_valid"
+                  }
+                ],
+                staticClass: "validation"
+              },
+              [_vm._v(_vm._s(_vm.validations.zip.text))]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "large-12 medium-12 small-12 cell" }, [
+            _c(
+              "a",
+              { staticClass: "button", on: { click: _vm.submitNewCafe } },
+              [_vm._v("提交")]
+            )
           ])
         ])
       ])
@@ -58941,7 +59109,9 @@ var cafes = {
         cafesLoadStatus: 0,
 
         cafe: {},
-        cafeLoadStatus: 0
+        cafeLoadStatus: 0,
+
+        cafeAddStatus: 0
     },
 
     /**
@@ -58975,6 +59145,25 @@ var cafes = {
                 commit('setCafe', []);
                 commit('setCafeLoadStatus', 3);
             });
+        },
+
+        // 通过dispatch从Vue中分发动作，如新增有咖啡店后reload Cafes模块
+        addCafe: function addCafe(_ref3, data) {
+            var commit = _ref3.commit,
+                state = _ref3.state,
+                dispatch = _ref3.dispatch;
+
+            // 状态1表示开始添加
+            commit('setCafeAddStatus', 1);
+
+            __WEBPACK_IMPORTED_MODULE_0__api_cafe_js__["a" /* default */].postAddNewCafe(data.name, data.address, data.city, data.state, data.zip).then(function (response) {
+                // 状态2表示添加成功
+                commit('setCafeAddStatus', 2);
+                dispatch('loadCafes');
+            }).catch(function () {
+                // status = 3 means add faild
+                commit('setCafeAddStatus', 3);
+            });
         }
     },
 
@@ -58993,6 +59182,9 @@ var cafes = {
         },
         setCafe: function setCafe(state, cafe) {
             state.cafe = cafe;
+        },
+        setCafeAddStatus: function setCafeAddStatus(state, status) {
+            state.cafeAddStatus = status;
         }
     },
 
@@ -59011,6 +59203,9 @@ var cafes = {
         },
         getCafe: function getCafe(state) {
             return state.cafe;
+        },
+        getCafeAddStatus: function getCafeAddStatus(state) {
+            return state.cafeAddStatus;
         }
     }
 };
