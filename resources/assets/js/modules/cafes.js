@@ -19,7 +19,9 @@ export const cafes = {
         cafesLoadStatus: 0,
 
         cafe: {},
-        cafeLoadStatus: 0
+        cafeLoadStatus: 0,
+
+        cafeAddStatus: 0
     },
 
     /**
@@ -52,6 +54,23 @@ export const cafes = {
                     commit('setCafe', []);
                     commit('setCafeLoadStatus', 3);
                 });
+        },
+
+        // 通过dispatch从Vue中分发动作，如新增有咖啡店后reload Cafes模块
+        addCafe({commit, state, dispatch}, data) {
+            // 状态1表示开始添加
+            commit('setCafeAddStatus', 1);
+
+            CafeAPI.postAddNewCafe(data.name, data.address, data.city, data.state, data.zip)
+                .then(function (response) {
+                    // 状态2表示添加成功
+                    commit('setCafeAddStatus', 2);
+                    dispatch('loadCafes');
+                })
+                .catch(function () {
+                    // status = 3 means add faild
+                    commit('setCafeAddStatus', 3);
+                });
         }
     },
 
@@ -70,6 +89,9 @@ export const cafes = {
         },
         setCafe (state, cafe) {
             state.cafe = cafe;
+        },
+        setCafeAddStatus(state, status) {
+            state.cafeAddStatus = status;
         }
     },
 
@@ -89,6 +111,9 @@ export const cafes = {
         },
         getCafe (state) {
             return state.cafe;
+        },
+        getCafeAddStatus (state) {
+            return state.cafeAddStatus;
         }
     }
 }
