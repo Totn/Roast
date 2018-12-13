@@ -41,4 +41,9 @@ return [
         'client_secret' => env('GIT_CLIENT_SECRET'),
         'redirect' => env('GIT_REDIRECT')
     ],
+
+    // maps
+    'gaode' => [
+        'ws_api_key' => env('GAODE_MAPS_WS_API_KEY'),
+    ],
 ];
