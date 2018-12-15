@@ -56389,6 +56389,7 @@ exports.push([module.i, "\ndiv#cafe-map {\n  width: 100%;\n  height: 400px;\n}\n
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_js__ = __webpack_require__(83);
 //
 //
 //
@@ -56400,6 +56401,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -56427,7 +56430,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
-            markers: []
+            markers: [],
+            infoWindows: []
         };
     },
     mounted: function mounted() {
@@ -56447,8 +56451,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         // 为所有咖啡店创建点标记
         buildMarkers: function buildMarkers() {
-            // 清空点标记数组
+            // 初始化点标记数组
             this.markers = [];
+            // 自定义点标记图标
+            var image = __WEBPACK_IMPORTED_MODULE_0__config_js__["a" /* ROAST_CONFIG */].APP_URL + '/storage/img/coffee-marker.png';
+            var icon = new AMap.Icon({
+                image: image,
+                // 设置图标尺寸
+                imageSize: new AMap.Size(19, 33)
+            });
 
             // 遍历所有咖啡店并为每个咖啡店创建标记
             for (var i = 0; i < this.cafes.length; i++) {
@@ -56458,10 +56469,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     continue;
                 }
                 var marker = new AMap.Marker({
-                    position: AMap.LngLat(parseFloat(this.cafes[i].latitude), parseFloat(this.cafes[i].longitude)),
-                    title: this.cafes[i].name
+                    position: new AMap.LngLat(parseFloat(this.cafes[i].latitude), parseFloat(this.cafes[i].longitude)),
+                    title: this.cafes[i].name,
+                    icon: icon,
+                    map: this.map
                 });
+                // 为每个咖啡店创建信息窗体
+                var infoWindow = new AMap.InfoWindow({
+                    content: this.cafes[i].name
+                });
+                this.infoWindows.push(infoWindow);
 
+                // 绑定点击事件到点标记对象，点击打开上面创建的信息窗体
+                marker.on('click', function () {
+                    infoWindow.open(this.getMap(), this.getPosition());
+                });
                 // 将每个点标记放到标记数组中
                 this.markers.push(marker);
             }
@@ -59508,6 +59530,7 @@ var cafes = {
  * Defines the API route we are using.
  */
 var api_url = '';
+var app_url = '';
 var gaode_maps_js_api_key = 'd60be924253c329d7ffede9a046879ab';
 switch ("development") {
     case 'development':
@@ -59521,6 +59544,7 @@ switch ("development") {
 
 var ROAST_CONFIG = {
     API_URL: api_url,
+    APP_URL: app_url,
     GAODE_MAPS_JS_API_KEY: gaode_maps_js_api_key
 };
 
