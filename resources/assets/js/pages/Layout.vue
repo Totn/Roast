@@ -23,6 +23,9 @@ export default {
         this.$store.dispatch('loadCafes');
         // 使用Vue存储器分发loadCafes动作来调用API
         // 加载咖啡店，并将数据保存到cafes模块中的cafes数组
+
+        // 加载冲泡方法
+        this.$store.dispatch('loadBrewMethods');
     },
 }
 </script>

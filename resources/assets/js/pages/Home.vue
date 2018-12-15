@@ -29,6 +29,10 @@
             // 获取cafes
             cafes () {
                 return this.$store.getters.getCafes;
+            },
+            // 获取brewMethods
+            brewMethods() {
+                return this.$store.getters.getBrewMethods;
             }
         }
     }

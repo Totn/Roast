@@ -50,4 +50,15 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
     | Description: Get An Individual Cafe
     */
     Route::get('/cafes/:id', "API\CafesController@getCafe");
+
+    /*
+    |--------------------------------------------------------------------------
+    | Get ALL The Count of The Methods With Cafes
+    |--------------------------------------------------------------------------
+    | URL:  /api/v1/brew-methods
+    | Controller: API\BrewMethodsController@getBrewMethods
+    | Method: GET
+    | Description: Get ALL The Count of The Methods With Cafes
+    */
+    Route::get('/brew-methods', "API\BrewMethodsController@getBrewMethods");
 });

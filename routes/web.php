@@ -30,3 +30,6 @@ Route::get('geocode', function ()
 {
     return \App\Utilities\GaodeMaps::geocodeAddress('滨海大道15号', '海口', '海南');
 });
+
+// test cafe
+Route::get('/cafe/{id}', 'API\CafesController@getCafe');
