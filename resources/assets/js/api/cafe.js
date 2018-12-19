@@ -38,5 +38,21 @@ export default {
             description: description,
             roaster: roaster
         });
+    },
+
+    /**
+     * POST /api/v1/cafes/{cafeID}/like
+     * @param {integer} cafeID 
+     */
+    postLikeCafe: function (cafeID) {
+        return axios.post(ROAST_CONFIG.API_URL + '/cafes/' + cafeID + '/like');
+    },
+
+    /**
+     * DELETE /api/v1/cafes/{cafeID}/like
+     * @param {integer} cafeID 
+     */
+    deleteLikeCafe: function (cafeID) {
+        return axios.delete(ROAST_CONFIG.API_URL + '/cafes' + cafeID + '/like');
     }
 }

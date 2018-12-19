@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Cafe;
 use App\Http\Requests\StoreCafeRequest;
 use App\Utilities\GaodeMaps;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 
 class CafesController extends Controller
@@ -33,7 +35,10 @@ class CafesController extends Controller
     */
     public function getCafe($id)
     {
-        $cafe = Cafe::where('id', '=', $id)->with('brewMethods')->first();
+        $cafe = Cafe::where('id', '=', $id)
+            ->with('brewMethods')
+            ->with('likes')
+            ->first();
         return response()->json($cafe);
     }
 
@@ -123,4 +128,40 @@ class CafesController extends Controller
         return response()->json($added_cafes, 201);
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Add a like to the cafe
+    |--------------------------------------------------------------------------
+    | URL:  /api/v1/cafes/{id}/like
+    | Controller: API\CafesController@postLikeCafe
+    | Method: POST
+    | Description: Add a like to the cafe
+    */
+    public function postLikeCafe($cafe_id)
+    {
+        $cafe = Cafe::where('id', '=', $cafe_id)->first();
+        $cafe->likes()->attach(Auth::user()->id, [
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        return response()->json(['cafe_liked' => true], 201);
+    }
+   
+    /*
+    |--------------------------------------------------------------------------
+    | Cancle the like to the cafe
+    |--------------------------------------------------------------------------
+    | URL:  /api/v1/cafes/{id}/like
+    | Controller: API\CafesController@postLikeCafe
+    | Method: DELETE
+    | Description: Cancle the like to the cafe
+    */
+    public function deleteLikeCafe($cafe_id)
+    {
+        $cafe = Cafe::where('id', '=', $cafe_id)->first();
+        $cafe->likes()->detach(Auth::user()->id);
+
+        return response()->json(null, 204);
+    }
 }
