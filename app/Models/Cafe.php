@@ -23,4 +23,14 @@ class Cafe extends Model
     {
         return $this->belongsToMany(User::class, 'users_cafes_likes', 'user_id', 'cafe_id');
     }
+
+    /**
+     * 咖啡店与标签之间的关系
+     *
+     * @return void
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'cafes_users_tags', 'cafe_id', 'tag_id');
+    }
 }

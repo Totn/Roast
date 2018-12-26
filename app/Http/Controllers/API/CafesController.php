@@ -7,6 +7,9 @@ use App\Http\Requests\StoreCafeRequest;
 use App\Utilities\GaodeMaps;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use App\Utilities\Tagger;
+use Illuminate\Support\Facades\DB;
 
 
 class CafesController extends Controller
@@ -88,9 +91,11 @@ class CafesController extends Controller
 
         // 冲泡方法
         $brew_methods = $locations[0]['methodsAvailable'];
+        // 标签信息
+        $tags = $locations[0]['tags'];
         // 保存与此咖啡店关联的所有冲泡方法（保存关联关系）
         $parent_cafe->brewMethods()->sync($brew_methods);
-
+        Tagger::tagCafe($parent_cafe, $tags, $request->user()->id);
         // 当前咖啡店数据推送到已添加咖啡店数组
         array_push($added_cafes, $parent_cafe->toArray());
 
@@ -163,5 +168,53 @@ class CafesController extends Controller
         $cafe->likes()->detach(Auth::user()->id);
 
         return response()->json(null, 204);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Add one tag to the cafe
+    |--------------------------------------------------------------------------
+    | URL:  /api/v1/cafes/{id}/tags
+    | Controller: API\CafesController@postLikeCafe
+    | Method: POST
+    | Description: Cancle the like to the cafe
+    */
+    public function postAddTags(Request $request, $cafe_id)
+    {
+        // 从请求中获取标签信息
+        $tags = $request->input('tags');
+        $cafe = Cafe::find('$cafe_id');
+
+        // 处理新增标签并建立标签与咖啡店之间的关联
+        Tagger::tagCafe($cafe, $tags, Auth::user()->id);
+
+        // 返回标签
+        $cafe = Cafe::where('id', '=', $cafe_id)
+            ->with('brewMethods')
+            ->with('likes')
+            ->with('tags')
+            ->first();
+
+        return response()->json($cafe, 201);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | D the like to the cafe
+    |--------------------------------------------------------------------------
+    | URL:  /api/v1/cafes/{id}/{$tag_id}
+    | Controller: API\CafesController@deleteCafeTag
+    | Method: DELETE
+    | Description: Cancle the like to the cafe
+    */
+    public function deleteCafeTag($cafe_id, $tag_id)
+    {
+        // 直接删除中间表中的关联记录
+        DB::table('cafes_users_tags')->where('cafe_id', $cafe_id)
+            ->where('tag_id', $tag_id)
+            ->where('user_id', Auth::user()->id)
+            ->delete();
+
+        return response(null, 204);
     }
 }

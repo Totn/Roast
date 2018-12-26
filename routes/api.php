@@ -78,11 +78,42 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
     | Cancle the like to the cafe
     |--------------------------------------------------------------------------
     | URL:  /api/v1/cafes/{id}/like
-    | Controller: API\CafesController@postLikeCafe
+    | Controller: API\CafesController@deleteLikeCafe
     | Method: DELETE
     | Description: Cancle the like to the cafe
     */
     Route::delete('/cafes/{id}/like', "API\CafesController@deleteLikeCafe");
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Add a Tag To The Cafe
+    |--------------------------------------------------------------------------
+    | URL:  /api/v1/cafes/{id}/tags
+    | Controller: API\CafesController@postAddTags
+    | Method: POST
+    | Description: User Add a Tag To The Cafe
+    */
+    Route::delete('/cafes/{id}/tags', "API\CafesController@postAddTags");
 
+    /*
+    |--------------------------------------------------------------------------
+    | Delete The Tag Of The Cafe
+    |--------------------------------------------------------------------------
+    | URL:  /api/v1/cafes/{id}/tags/{tagID}
+    | Controller: API\CafesController@deleteCafeTag
+    | Method: DELETE
+    | Description: User Delete One Of He's Tags To The Cafe
+    */
+    Route::delete('/cafes/{id}/tags/{tagID}', "API\CafesController@deleteCafeTag");
 
+    /*
+    |--------------------------------------------------------------------------
+    | Search The Tags
+    |--------------------------------------------------------------------------
+    | URL:  /api/v1/tags
+    | Controller: API\TagsController@tags
+    | Method: GET
+    | Description:  provide support to Tags's Search
+    */
+    Route::get('/tags', "API\TagsController@getTags");
 });
