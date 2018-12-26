@@ -123,9 +123,10 @@ class CafesController extends Controller
                 $cafe->added_by = $request->user()->id;
 
                 $cafe->save();
-                
+                // 同步添加冲泡方法
                 $cafe->brewMethods()->sync($locations[$i]['methodsAvailable']);
-
+                // 同步添加标签
+                $cafe->tags()->sync($locations[$i]['tags']);
                 array_push($added_cafes, $cafe->toArray());
             }
         }
