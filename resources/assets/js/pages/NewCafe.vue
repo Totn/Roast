@@ -1,5 +1,6 @@
-<style lang="">
-    
+<style scoped lang="scss">
+    @import '~@/abstracts/_variables.scss';
+    @import '~@/components/_validations.scss';
 </style>
 
 <template>
