@@ -1,64 +1,79 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## About Roast
 
-## About Laravel
+ 一个关于城市咖啡店的小应用
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+## Instatll
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```
+git clone ssh://git@119.29.2.174:10022/RushDuck/Roast.git
+```
+clone代码之后， 复制.env.emaple为 .env文件，编辑.env文件配置数据库信息。
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+``` composer install ``` 初始化时，可能遇到遇到速度慢的问题。可以配置laravel的composer镜像
+```
+$ composer config -g repo.packagist composer https://packagist.laravel-china.org
+```
+安装过程结束时可能会遇到报错如下：
+```
 
-## Learning Laravel
+  [Symfony\Component\Process\Exception\RuntimeException]                                   
+  The Process class relies on proc_open, which is not available on your PHP installation.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+```
+解决方式为编辑``` php.ini ```文件，找到disable_funcions一行，将其中的``` proc_open, proc_get_status, symlink ```删除后保存，然后重启php-fpm
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+再执行一次``` composer update ``` 确保初始化成功
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
+## Setting
+#### 配置程序
+若初始化过程没有自动生成密钥，则需要手动生成，执行
+```
+php artisan key:generate
+```
+为程序创建数据库
+```
+php artisan migrate
+```
+程序使用了passport扩展，需要安装令牌
+```
+php artisan passport:insall
+```
+设置storage的软链
+```
+php artisan storage:link
+```
+#### 配置github登陆
+打开[GITHUB](https://github.com/settings/developers)，注册并配置一个Oauth App，然后编辑.env文件
+```
+GIT_CLIENT_ID=github应用的Client ID
+GIT_CLIENT_SECRET=github应用的密钥Client Secret
+GIT_REDIRECT=github应用的授权回调URL
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
+#### 配置高德地图应用
+向高德地图[申请KEY](https://lbs.amap.com/api/webservice/guide/create-project/get-key)，配置到.env文件中
+```
+GAODE_MAPS_WS_API_KEY={YOUR_API_KEY}
+```
+申请JS API Key， 配置到``` resources/assets/js/config.js ```
+```
+/**
+ * Defines the API route we are using.
+ */
+var api_url = '';
+var gaode_maps_js_api_key = '{YOUR API KEY HERE}';
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+switch( process.env.NODE_ENV ){
+    case 'development':
+        api_url = 'http://{your.testdomain}/api/v1';
+        break;
+    case 'production':
+        api_url = 'http://{you.productiondomain}/api/v1';
+        break;
+}
+```
 
 ## License
 
