@@ -65,6 +65,10 @@
                                 <label v-bind:for="'brew-method-'+brewMethod.id+'-'+key">{{ brewMethod.method }}</label>
                             </span>
                         </div>
+                        <!-- 标签输入框 -->
+                        <div class="large-12 medium-12 small-12 cell">
+                            <tags-input v-bind:unique="key"></tags-input>
+                        </div>
                         <div class="large-12 medium-12 small-12 cell">
                             <a class="button" v-on:click="removeLocation(key)">移除位置</a>
                         </div>
@@ -85,9 +89,20 @@
 </template>
 
 <script>
+    import TagsInput from "../components/global/forms/TagsInput.vue";
+    import { EventBus } from "../event-bus.js";
     export default {
+        components: {
+            TagsInput
+        },
         created() {
             this.addLocation();
+        },
+        mounted() {
+            EventBus.$on('tags-edited', function (tagsAdded) {
+                // 绑定方法，组件中触发tags-edited方法
+                this.locations[tagsAdded.unique].tags = tagsAdded.tags;
+            }.bind(this));
         },
         data() {
             return {
@@ -255,7 +270,10 @@
                         is_valid: true,
                         text: ''
                     }
-                }
+                };
+
+                // 清理输入标签
+                EventBus.$emit('clear-tags');
             }
         },
         watch: {
