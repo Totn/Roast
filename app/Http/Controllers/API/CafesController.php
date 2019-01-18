@@ -95,6 +95,7 @@ class CafesController extends Controller
         $tags = $locations[0]['tags'];
         // 保存与此咖啡店关联的所有冲泡方法（保存关联关系）
         $parent_cafe->brewMethods()->sync($brew_methods);
+        // 建立咖啡店与标签的关联
         Tagger::tagCafe($parent_cafe, $tags, $request->user()->id);
         // 当前咖啡店数据推送到已添加咖啡店数组
         array_push($added_cafes, $parent_cafe->toArray());
@@ -126,7 +127,7 @@ class CafesController extends Controller
                 // 同步添加冲泡方法
                 $cafe->brewMethods()->sync($locations[$i]['methodsAvailable']);
                 // 同步添加标签
-                $cafe->tags()->sync($locations[$i]['tags']);
+                Tagger::tagCafe($cafe, $locations[$i]['tags'], $request->user()->id);
                 array_push($added_cafes, $cafe->toArray());
             }
         }

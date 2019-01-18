@@ -93,7 +93,7 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
     | Method: POST
     | Description: User Add a Tag To The Cafe
     */
-    Route::delete('/cafes/{id}/tags', "API\CafesController@postAddTags");
+    Route::post('/cafes/{id}/tags', "API\CafesController@postAddTags");
 
     /*
     |--------------------------------------------------------------------------
