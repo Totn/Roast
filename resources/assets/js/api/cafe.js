@@ -53,6 +53,6 @@ export default {
      * @param {integer} cafeID 
      */
     deleteLikeCafe: function (cafeID) {
-        return axios.delete(ROAST_CONFIG.API_URL + '/cafes' + cafeID + '/like');
+        return axios.delete(ROAST_CONFIG.API_URL + '/cafes/' + cafeID + '/like');
     }
 }

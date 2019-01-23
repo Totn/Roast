@@ -4,7 +4,7 @@
         position: relative;
 
         div.tags-input {
-            display: block;
+            display: table;
             -webkit-box-sizing: border-box;
             box-sizing: border-box;
             width: 100%;
@@ -119,6 +119,7 @@
 <script>
     import {ROAST_CONFIG} from "../../../config.js";
     import {EventBus} from "../../../event-bus.js";
+    import _ from 'lodash';
 
     export default {
         props: ['unique'],
@@ -165,7 +166,11 @@
             },
 
             // 根据搜索词查询后端自动提示API接口并将结果展示到下拉列表
-            searchTags() {
+            // 引入防抖函数，在300ms后执行匿名函数内代码
+            searchTags: _.debounce(function(e) {
+                if (this.currentTag === undefined) {
+                    return;
+                }
                 if (this.currentTag.length >= 2 && !this.pauseSearch) {
                     this.searchSelectedIndex = -1;
                     // 从后端获取数据
@@ -179,11 +184,15 @@
                         this.pauseSearch = false;
                     }.bind(this));
                 }
-            },
+            }, 300),
 
             // 新增标签
             addNewTag() {
                 // 判断输入标签是否已存在
+                if (this.currentTag === undefined) {
+                    console.log(this);
+                    return;
+                }
                 if (!this.checkDuplicates(this.currentTag)) {
                     var newTagName = this.cleanTagName(this.currentTag);
                     this.tagsArray.push(newTagName);
