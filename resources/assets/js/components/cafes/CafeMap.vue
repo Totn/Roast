@@ -1,18 +1,42 @@
 <style lang="scss">
-    div#cafe-map {
-        width: 100%;
-        height: 400px;
+    div#cafe-map-container {
+        position: absolute;
+        top: 50px;
+        left: 0px;
+        right: 0px;
+        bottom: 50px;
+
+        div#cafe-map {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+        }
     }
 </style>
 
 <template>
-    <div id="cafe-map"></div>
+    <div id="cafe-map-container">
+        <div id="cafe-map">
+
+        </div>
+        <cafe-map-filter></cafe-map-filter>
+    </div>
 </template>
 
 <script>
-import {ROAST_CONFIG} from '../../config.js';
+import { ROAST_CONFIG } from '../../config.js';
+import CafeMapFilter from './CafeMapFilter.vue';
+import { EventBus } from "../../event-bus.js";
+import { CafeIsRoasterFilter } from "../../mixins/filters/CafeIsRoasterFilter.js";
+import { CafeBrewMethodsFilter } from "../../mixins/filters/CafeBrewMethodsFilter.js";
+import { CafeTextFilter } from "../../mixins/filters/CafeTextFilter.js";
 
 export default {
+    components: {
+        CafeMapFilter
+    },
     props: {
         // 经度
         'latitude': {
@@ -49,6 +73,11 @@ export default {
         });
         this.clearMarkers();
         this.buildMarkers();
+        // 监听总线fiters-updated 事件过滤点标记
+        EventBus.$on('filters-updated', function (filters) {
+            this.processFilters(filters);
+        }.bind(this));
+
     },
     computed: {
         cafes() {
@@ -77,9 +106,12 @@ export default {
                 }
                 var marker = new AMap.Marker({
                     position: new AMap.LngLat(parseFloat(this.cafes[i].latitude), parseFloat(this.cafes[i].longitude)),
-                    title: this.cafes[i].name,
+                    title: this.cafes[i].location_name,
                     icon: icon,
-                    map: this.map
+                    map: this.map,
+                    extData: {
+                        'cafe': this.cafes[i]
+                    }
                 });
                 // 为每个咖啡店创建信息窗体
                 var infoWindow = new AMap.InfoWindow({
@@ -94,7 +126,7 @@ export default {
                 // 将每个点标记放到标记数组中
                 this.markers.push(marker);
             }
-            // console.log({cafes: this.cafes, markers: this.markers});
+
             // 将所有点标记显示到地图上
             this.map.add(this.markers);
         },
@@ -102,6 +134,52 @@ export default {
         clearMarkers() {
             for (var index = 0; index < this.markers.length; index++) {
                 this.markers[index].setMap(null);
+                
+            }
+        },
+        // 处理条件过滤
+        processFilters(filters) {
+            for (let index = 0; index < this.markers.length; index++) {
+                // 初始条件
+                if (filters.text === ''
+                    && filters.roaster === false
+                    && filters.brew_methods.length === 0) {
+                    // 设置地图
+                    this.markers[index].setMap(this.map);
+                } else {
+                    var textPassed = false;
+                    var brewMethodsPassed = false;
+                    var roasterPassed = false;
+                    var _cafe = this.markers[index].getExtData().cafe;
+
+                    // 烘焙师过滤
+                    if (filters.roaster && this.processCafeIsRoasterFilter(_cafe)) {
+                        roasterPassed = true;
+                    } else if (!filters.roaster) {
+                        roasterPassed = true;
+                    }
+
+                    // 文本过滤
+                    if (filters.text !== '' && this.processCafeTextFilter(_cafe, filters.text)) {
+                        textPassed = true;
+                    } else if (filters.text === '') {
+                        textPassed = true;
+                    }
+
+                    // 冲泡方法过滤
+                    if (filters.brew_methods.length > 0 && this.processCafeBrewMethodsFilter(_cafe, filters.brew_methods)) {
+                        brewMethodsPassed = true;
+                    } else if (filters.brew_methods.length === 0) {
+                        brewMethodsPassed = true;
+                    }
+
+                    // 由判断结果决定该咖啡店是否显示
+                    if (roasterPassed && brewMethodsPassed && textPassed) {
+                        this.markers[index].setMap(this.map);
+                    } else {
+                        this.markers[index].setMap(null);
+                    }
+                }
                 
             }
         }
@@ -112,6 +190,11 @@ export default {
             this.clearMarkers();
             this.buildMarkers();
         }
-    }
+    },
+    mixins: [
+        CafeIsRoasterFilter,
+        CafeBrewMethodsFilter,
+        CafeTextFilter
+    ]
 }
 </script>

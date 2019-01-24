@@ -72,7 +72,7 @@
 </template>
 
 <script>
-    import { CafeIsRosterFilter } from "../../mixins/filters/CafeIsRoasterFilter.js";
+    import { CafeIsRoasterFilter } from "../../mixins/filters/CafeIsRoasterFilter.js";
     import { CafeBrewMethodsFilter } from "../../mixins/filters/CafeBrewMethodsFilter.js";
     import { CafeTagsFilter } from "../../mixins/filters/CafeTagsFilter.js";
     import { CafeTextFilter } from "../../mixins/filters/CafeTextFilter.js";
@@ -89,7 +89,7 @@
             }
         },
         mixins: [
-            CafeIsRosterFilter,
+            CafeIsRoasterFilter,
             CafeBrewMethodsFilter,
             CafeTagsFilter,
             CafeTextFilter

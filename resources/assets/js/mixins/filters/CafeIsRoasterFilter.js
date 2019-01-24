@@ -1,4 +1,4 @@
-export const CafeIsRosterFilter = {
+export const CafeIsRoasterFilter = {
     methods: {
         processCafeIsRoasterFilter(cafe) {
             // 检查咖啡店是否是烘焙店

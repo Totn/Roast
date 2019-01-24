@@ -33,3 +33,12 @@ Route::get('geocode', function ()
 
 // test cafe
 Route::get('/cafe/{id}', 'API\CafesController@getCafe');
+
+// test tags
+Route::get('/set-tags/{id}/{tags}', function ($id, $tags)
+{
+    $cafe = \App\Models\Cafe::find($id);
+    $tags = preg_split("/[\s,，]+/", $tags);
+
+    return \App\Utilities\Tagger::tagCafe($cafe, $tags, 1);
+});
