@@ -21,7 +21,8 @@
       border-bottom: 4px solid $primary-color;
     }
     
-    span.show-filter {
+  }
+    span.show-filters {
         display: block;
         margin: auto;
         color: $dark-color;
@@ -29,7 +30,6 @@
         cursor: pointer;
         font-size: 14px;
     }
-  }
 </style>
 
 <template>
