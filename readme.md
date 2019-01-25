@@ -1,12 +1,12 @@
 
 ## About Roast
 
- 一个关于城市咖啡店的小应用
+ 一个关于城市咖啡店的小应用，详细教程见[Laravel学院](https://laravelacademy.org/api-driven-development-laravel-vue)。
 
 ## Instatll
 
 ```
-git clone ssh://git@119.29.2.174:10022/RushDuck/Roast.git
+git clone git@github.com:Totn/Roast.git
 ```
 clone代码之后， 复制.env.emaple为 .env文件，编辑.env文件配置数据库信息。
 
