@@ -18,13 +18,23 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={YOUR_GOOGLE_ANALYTICS_ID}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '{YOUR_GOOGLE_ANALYTICS_ID}');
+    </script>
+
 </head>
 <body>
     <div id="app">
         <router-view></router-view>
     </div>
 
-    <script src="https://webapi.amap.com/maps?v=1.4.8&key=d60be924253c329d7ffede9a046879ab"></script>
+    <script src="https://webapi.amap.com/maps?v=1.4.8&key={YOUR_GAODE_MAP_JS_KEY}"></script>
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

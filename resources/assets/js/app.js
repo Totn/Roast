@@ -46,3 +46,11 @@ new Vue({
     router,
     store
 }).$mount('#app');
+
+gtag('set', 'page', router.currentRoute.path);
+gtag('send', 'pageview');
+
+router.afterEach((to, from) => {
+    gtag('set', 'page', to.path);
+    gtag('send', 'pageview');
+});

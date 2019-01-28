@@ -75,6 +75,21 @@ switch( process.env.NODE_ENV ){
 }
 ```
 
+#### 配置Google Analytics 
+去[官网](https://analytics.google.com)注册一个Google Analytics账号，将获取到网站跟踪代码复制到``` /resources/views/app.blade.php ```中如下所示
+```
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={YOUR_GOOGLE_ANALYTICS_ID}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '{YOUR_GOOGLE_ANALYTICS_ID}');
+    </script>
+```
+其中gtag函数名可能会变化，注意与``` /resource/assets/js/app.js ```中的gtag函数名操持一致
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
