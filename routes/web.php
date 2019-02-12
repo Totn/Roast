@@ -11,12 +11,17 @@
 |
 */
 
-Route::get('/', 'Web\AppController@getApp')
-->middleware('auth');
+Route::get('/', 'Web\AppController@getApp');
+// 移除认证中间件
+// ->middleware('auth');
 
-Route::get('/login', 'Web\AppController@getLogin')
-->name('login')
-->middleware('guest');
+// 移除旧登陆路由
+// Route::get('/login', 'Web\AppController@getLogin')
+// ->name('login')
+// ->middleware('guest');
+
+// 退出登陆
+Route::get('/logout', 'Web\AppController@getLogout');
 
 // 登录证认证路由
 Route::get('auth/{social}', 'Web\AuthenticationController@getSocialRedirect')

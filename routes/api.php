@@ -13,11 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-
+// 公有路由，无需登陆即可访问
+Route::group(['prefix' => 'v1'], function ()
+{
     /*
     |--------------------------------------------------------------------------
     | Get All Cafes
@@ -28,17 +26,6 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
     | Description: Gets all of the cafes in the application
     */
     Route::get('/cafes', 'API\CafesController@getCafes');
-
-    /*
-    |--------------------------------------------------------------------------
-    | Add a New Cafe
-    |--------------------------------------------------------------------------
-    | URL:  /api/v1/cafes
-    | Controller: API\CafesController@postNewCafe
-    | Method: POST
-    | Description: Adds a new cafe to the application
-    */
-    Route::post('/cafes', 'API\CafesController@postNewCafe');
 
     /*
     |--------------------------------------------------------------------------
@@ -61,6 +48,58 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
     | Description: Get ALL The Count of The Methods With Cafes
     */
     Route::get('/brew-methods', "API\BrewMethodsController@getBrewMethods");
+
+    /*
+    |--------------------------------------------------------------------------
+    | Search The Tags
+    |--------------------------------------------------------------------------
+    | URL:  /api/v1/tags
+    | Controller: API\TagsController@tags
+    | Method: GET
+    | Description:  provide support to Tags's Search
+    */
+    Route::get('/tags', "API\TagsController@getTags");
+
+    Route::get('/user', 'API\UsersController@getUser');
+    // Route::get('/user', function (Request $request) {
+    //     return $request->user();
+    // });
+});
+
+Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Add a New Cafe
+    |--------------------------------------------------------------------------
+    | URL:  /api/v1/cafes
+    | Controller: API\CafesController@postNewCafe
+    | Method: POST
+    | Description: Adds a new cafe to the application
+    */
+    Route::post('/cafes', 'API\CafesController@postNewCafe');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Viste The Page of Editing Coffee(TODO)
+    |--------------------------------------------------------------------------
+    | URL:  /api/v1/cafes/{id}/edit
+    | Controller: API\CafesController@postNewCafe
+    | Method: GET
+    | Description: Adds a new cafe to the application
+    */
+    Route::get('/cafes/{id}/edit', 'API\CafesController@getEditCafe');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Commit The New Edition Of Coffee(TODO)
+    |--------------------------------------------------------------------------
+    | URL:  /api/v1/cafes/{id}
+    | Controller: API\CafesController@postNewCafe
+    | Method: PUT
+    | Description: Adds a new cafe to the application
+    */
+    Route::put('/cafes/{id}/edit', 'API\CafesController@putEditCafe');
 
     /*
     |--------------------------------------------------------------------------
@@ -106,14 +145,4 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
     */
     Route::delete('/cafes/{id}/tags/{tagID}', "API\CafesController@deleteCafeTag");
 
-    /*
-    |--------------------------------------------------------------------------
-    | Search The Tags
-    |--------------------------------------------------------------------------
-    | URL:  /api/v1/tags
-    | Controller: API\TagsController@tags
-    | Method: GET
-    | Description:  provide support to Tags's Search
-    */
-    Route::get('/tags', "API\TagsController@getTags");
 });
