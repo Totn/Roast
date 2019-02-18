@@ -70,8 +70,15 @@
                     <div class="cafe-page" v-show="cafeLoadStatus === 2">
                         <h2>{{ cafe.name }}</h2>
                         <h3 v-if="cafe.location_name !== ''">{{ cafe.location_name }}</h3>
-                        <!-- 喜欢与否 -->
-                        <div class="grid-x">
+                        <!-- 喜欢与否, 登陆之后显示 -->
+                        <div class="like-contatiner">
+                            <div class="grid-x">
+                                <div class="large-12 medium-12 small-12 cell">
+                                    <toggle-like></toggle-like>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid-x" v-if="user !== '' && userLoadStatus === 2">
                             <div class="large-12 medium-12 small-12 cell">
                                 <toggle-like></toggle-like>
                             </div>
@@ -113,6 +120,7 @@
 </template>
 
 <script>
+    import { EventBus } from "../event-bus.js";
     import Loader from '../components/global/Loader.vue';
     import IndividualCafeMap from '../components/cafes/IndividualCafeMap.vue';
     import ToggleLike from '../components/cafes/ToggleLike.vue';
@@ -140,6 +148,12 @@
             },
             cafe() {
                 return this.$store.getters.getCafe;
+            },
+            userLoadStatus() {
+                return this.$store.getters.getUserLoadStatus;
+            },
+            user() {
+                return this.$store.getters.getUser;
             }
         }
     }

@@ -3,7 +3,7 @@
 
  一个关于城市咖啡店的小应用，详细教程见[Laravel学院](https://laravelacademy.org/api-driven-development-laravel-vue)。
 
-## Instatll
+## Install
 
 ```
 git clone git@github.com:Totn/Roast.git

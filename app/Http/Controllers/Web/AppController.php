@@ -18,9 +18,4 @@ class AppController extends Controller
         Auth::logout();
         return redirect('/');
     }
-    // 移除旧登录方法
-    // public function getLogin()
-    // {
-    //     return view('login');
-    // }
 }

@@ -6,15 +6,18 @@
     <div id="app-layout">
         <navigation></navigation>
         <router-view></router-view>
+        <login-modal></login-modal>
     </div>
 </template>
 
 <script>
 import Navigation from '../components/global/Navigation.vue';
+import LoginModal from "../components/global/LoginModal.vue";
 
 export default {
     components: {
-        Navigation
+        Navigation,
+        LoginModal
     },
     // 在组件创建之后绑定的声明周期钩子created()被会调用，
     // 我们将在这个钩子函数中分配起加载咖啡店的动作

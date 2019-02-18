@@ -75,13 +75,15 @@
         </ul>
 
         <div class="right">
-            <img :src="user.avatar" v-show="userLoadStatus == 2" class="avatar">
+            <img :src="user.avatar" v-if="user != '' && userLoadStatus === 2" v-show="userLoadStatus === 2" class="avatar">
+            <span class="logout" v-if="user != '' && userLoadStatus === 2" v-on:click="logout()">退出</span>
+            <span class="login" v-if="user == ''" v-on:click="login()">登陆</span>
         </div>
     </nav>
 </template>
 
 <script>
-
+import { EventBus } from "../../event-bus.js";
 export default {
     // 定义组件的计算属性
     computed: {
@@ -95,6 +97,16 @@ export default {
             return this.$store.getters.getUser || {
                 avatar: ''
             };
+        }
+    },
+    methods: {
+        login() {
+            EventBus.$emit('prompt-login');
+        },
+        logout() {
+            // 清除Vuex中的用户状态数据，然后跳转到logout退出
+            this.$store.dispatch('logoutUser');
+            window.location = '/logout';
         }
     }
 }

@@ -6,7 +6,7 @@ var app_url = '';
 var gaode_maps_js_api_key = 'd60be924253c329d7ffede9a046879ab';
 switch (process.env.NODE_ENV) {
     case 'development':
-        api_url = 'http://roast.my/api/v1';
+        api_url = 'http://roast.gg/api/v1';
         break;
 
     case 'production':

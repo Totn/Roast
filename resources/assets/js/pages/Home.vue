@@ -20,7 +20,10 @@
         <div class="grid-container">
             <div class="grid-x">
                 <div class="large-12 medium-12 small-12 columns">
-                    <router-link :to="{ name: 'newcafe'}" class="add-cafe-button">+ 新增咖啡店</router-link>
+                    <!-- 跳转新增咖啡店的页面 -->
+                    <router-link class="add-cafe-button" :to="{ name: 'newcafe' }" v-if="user !=='' && userLoaderStatus === 2">+ 新增咖啡店</router-link>
+                    <!-- 登陆操作 -->
+                    <a class="add-cafe-text" v-if="user === '' && userLoaderStatus === 2" v-on:click="login()">登陆后添加咖啡店</a>
                 </div>
             </div>
         </div>
@@ -35,6 +38,7 @@
 </template>
 
 <script>
+    import { EventBus } from "../event-bus.js";
     import CafeFilter from "../components/cafes/CafeFilter.vue";
     import CafeCard from "../components/cafes/CafeCard.vue";
     import Loader from "../components/global/Loader.vue";
@@ -60,6 +64,10 @@
             // 获取brewMethods
             brewMethods() {
                 return this.$store.getters.getBrewMethods;
+            },
+            // 用户信息
+            user() {
+                return this.$store.getters.getUsesr;
             }
         }
     }
