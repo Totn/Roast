@@ -29,6 +29,9 @@ export default {
 
         // 加载冲泡方法
         this.$store.dispatch('loadBrewMethods');
+
+        // 加载用户信息
+        this.$store.dispatch('loadUser');
     },
 }
 </script>

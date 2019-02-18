@@ -74,13 +74,9 @@
                         <div class="like-contatiner">
                             <div class="grid-x">
                                 <div class="large-12 medium-12 small-12 cell">
-                                    <toggle-like></toggle-like>
+                                    <toggle-like v-if="user !== '' && userLoadStatus === 2"></toggle-like>
+                                    <a class="prompt-log-in" v-if="user === '' && userLoadStatus === 2" v-on:click="login()">登陆后喜欢一下</a>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="grid-x" v-if="user !== '' && userLoadStatus === 2">
-                            <div class="large-12 medium-12 small-12 cell">
-                                <toggle-like></toggle-like>
                             </div>
                         </div>
                         <!-- 标签 -->
@@ -154,6 +150,12 @@
             },
             user() {
                 return this.$store.getters.getUser;
+            }
+        },
+
+        methods: {
+            login() {
+                EventBus.$emit('prompt-login');
             }
         }
     }

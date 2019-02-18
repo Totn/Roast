@@ -56040,6 +56040,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         // 加载冲泡方法
         this.$store.dispatch('loadBrewMethods');
+
+        // 加载用户信息
+        this.$store.dispatch('loadUser');
     }
 });
 
@@ -56238,9 +56241,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         // 从Vuex中获取用户信息
         user: function user() {
-            return this.$store.getters.getUser || {
-                avatar: ''
-            };
+            return this.$store.getters.getUser;
         }
     },
     methods: {
@@ -56284,7 +56285,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "right" }, [
-        _vm.user != "" && _vm.userLoadStatus === 2
+        _vm.user !== "" && _vm.userLoadStatus === 2
           ? _c("img", {
               directives: [
                 {
@@ -56299,7 +56300,7 @@ var render = function() {
             })
           : _vm._e(),
         _vm._v(" "),
-        _vm.user != "" && _vm.userLoadStatus === 2
+        _vm.user !== "" && _vm.userLoadStatus === 2
           ? _c(
               "span",
               {
@@ -56314,7 +56315,7 @@ var render = function() {
             )
           : _vm._e(),
         _vm._v(" "),
-        _vm.user == ""
+        _vm.user === ""
           ? _c(
               "span",
               {
@@ -56763,7 +56764,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         // 用户信息
         user: function user() {
-            return this.$store.getters.getUsesr;
+            return this.$store.getters.getUser;
+        },
+
+        // 用户加载状态
+        userLoadStatus: function userLoadStatus() {
+            return this.$store.getters.getUserLoadStatus;
+        }
+    },
+    methods: {
+        login: function login() {
+            __WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].$emit('prompt-login');
         }
     }
 });
@@ -58188,7 +58199,7 @@ var render = function() {
             "div",
             { staticClass: "large-12 medium-12 small-12 columns" },
             [
-              _vm.user !== "" && _vm.userLoaderStatus === 2
+              _vm.user !== "" && _vm.userLoadStatus === 2
                 ? _c(
                     "router-link",
                     {
@@ -58199,7 +58210,7 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              _vm.user === "" && _vm.userLoaderStatus === 2
+              _vm.user === "" && _vm.userLoadStatus === 2
                 ? _c(
                     "a",
                     {
@@ -60220,10 +60231,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -60260,6 +60267,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         user: function user() {
             return this.$store.getters.getUser;
+        }
+    },
+
+    methods: {
+        login: function login() {
+            __WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* EventBus */].$emit('prompt-login');
         }
     }
 });
@@ -60744,22 +60757,30 @@ var render = function() {
                     _c(
                       "div",
                       { staticClass: "large-12 medium-12 small-12 cell" },
-                      [_c("toggle-like")],
+                      [
+                        _vm.user !== "" && _vm.userLoadStatus === 2
+                          ? _c("toggle-like")
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.user === "" && _vm.userLoadStatus === 2
+                          ? _c(
+                              "a",
+                              {
+                                staticClass: "prompt-log-in",
+                                on: {
+                                  click: function($event) {
+                                    _vm.login()
+                                  }
+                                }
+                              },
+                              [_vm._v("登陆后喜欢一下")]
+                            )
+                          : _vm._e()
+                      ],
                       1
                     )
                   ])
                 ]),
-                _vm._v(" "),
-                _vm.user !== "" && _vm.userLoadStatus === 2
-                  ? _c("div", { staticClass: "grid-x" }, [
-                      _c(
-                        "div",
-                        { staticClass: "large-12 medium-12 small-12 cell" },
-                        [_c("toggle-like")],
-                        1
-                      )
-                    ])
-                  : _vm._e(),
                 _vm._v(" "),
                 _c("div", { staticClass: "tags-container" }, [
                   _c("div", { staticClass: "grid-x grid-padding-x" }, [
@@ -60867,6 +60888,7 @@ if (false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(126);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_cafes_js__ = __webpack_require__(127);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_brewMethods_js__ = __webpack_require__(129);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_users_js__ = __webpack_require__(137);
 /*
  |-------------------------------------------------------------------------------
  | VUEX store.js
@@ -60894,10 +60916,13 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
  */
 
 
+
+
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
   modules: {
     cafes: __WEBPACK_IMPORTED_MODULE_2__modules_cafes_js__["a" /* cafes */],
-    brewMethods: __WEBPACK_IMPORTED_MODULE_3__modules_brewMethods_js__["a" /* brewMethods */]
+    brewMethods: __WEBPACK_IMPORTED_MODULE_3__modules_brewMethods_js__["a" /* brewMethods */],
+    users: __WEBPACK_IMPORTED_MODULE_4__modules_users_js__["a" /* users */]
   }
 }));
 
@@ -63381,6 +63406,100 @@ var brewMethods = {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_js__ = __webpack_require__(6);
+/**
+ * Imports the Roast API URL from the config.
+ */
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+
+  /**
+   * GET /api/v1/user
+   */
+  getUser: function getUser() {
+    return axios.get(__WEBPACK_IMPORTED_MODULE_0__config_js__["a" /* ROAST_CONFIG */].API_URL + '/user');
+  }
+});
+
+/***/ }),
+/* 137 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return users; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__api_user_js__ = __webpack_require__(136);
+/*
+|-------------------------------------------------------------------------------
+| VUEX modules/user.js
+|-------------------------------------------------------------------------------
+| The Vuex data store for the user
+*/
+
+
+
+var users = {
+    state: {
+        user: {},
+        userLoadStatus: 0
+    },
+
+    actions: {
+
+        // 加载用户信息
+        loadUser: function loadUser(_ref) {
+            var commit = _ref.commit;
+
+            // 标记开始加载用户
+            commit('setUserLoadStatus', 1);
+
+            __WEBPACK_IMPORTED_MODULE_0__api_user_js__["a" /* default */].getUser()
+            // 加载成功
+            .then(function (response) {
+                // 未登陆时data = ''
+                commit('setUser', response.data);
+                commit('setUserLoadStatus', 2);
+            })
+            // 加载失败
+            .catch(function () {
+                commit('setUser', {});
+                commit('setUserLoadStatus', 3);
+            });
+        }
+    },
+
+    mutations: {
+        //  用户数据加载到state中
+        setUser: function setUser(state, data) {
+            state.user = data;
+        },
+
+        // 设置用户数据加载状态
+        setUserLoadStatus: function setUserLoadStatus(state, status) {
+            state.userLoadStatus = status;
+        }
+    },
+
+    getters: {
+        getUser: function getUser(state) {
+            return state.user;
+        },
+        getUserLoadStatus: function getUserLoadStatus(state) {
+            return state.userLoadStatus;
+        }
+    }
+};
 
 /***/ })
 /******/ ]);

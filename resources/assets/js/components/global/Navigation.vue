@@ -75,9 +75,9 @@
         </ul>
 
         <div class="right">
-            <img :src="user.avatar" v-if="user != '' && userLoadStatus === 2" v-show="userLoadStatus === 2" class="avatar">
-            <span class="logout" v-if="user != '' && userLoadStatus === 2" v-on:click="logout()">退出</span>
-            <span class="login" v-if="user == ''" v-on:click="login()">登陆</span>
+            <img :src="user.avatar" v-if="user !== '' && userLoadStatus === 2" v-show="userLoadStatus === 2" class="avatar">
+            <span class="logout" v-if="user !== '' && userLoadStatus === 2" v-on:click="logout()">退出</span>
+            <span class="login" v-if="user === ''" v-on:click="login()">登陆</span>
         </div>
     </nav>
 </template>
@@ -94,9 +94,7 @@ export default {
 
         // 从Vuex中获取用户信息
         user () {
-            return this.$store.getters.getUser || {
-                avatar: ''
-            };
+            return this.$store.getters.getUser;
         }
     },
     methods: {

@@ -25,9 +25,12 @@ Vue.use(Vuex)
  */
 import {cafes} from './modules/cafes.js';
 import {brewMethods} from './modules/brewMethods.js';
+import {users} from './modules/users.js';
+
 export default new Vuex.Store({
     modules: {
         cafes,
-        brewMethods
+        brewMethods,
+        users
     }
 });

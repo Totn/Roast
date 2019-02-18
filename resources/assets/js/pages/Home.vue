@@ -21,9 +21,9 @@
             <div class="grid-x">
                 <div class="large-12 medium-12 small-12 columns">
                     <!-- 跳转新增咖啡店的页面 -->
-                    <router-link class="add-cafe-button" :to="{ name: 'newcafe' }" v-if="user !=='' && userLoaderStatus === 2">+ 新增咖啡店</router-link>
+                    <router-link class="add-cafe-button" :to="{ name: 'newcafe' }" v-if="user !=='' && userLoadStatus === 2">+ 新增咖啡店</router-link>
                     <!-- 登陆操作 -->
-                    <a class="add-cafe-text" v-if="user === '' && userLoaderStatus === 2" v-on:click="login()">登陆后添加咖啡店</a>
+                    <a class="add-cafe-text" v-if="user === '' && userLoadStatus === 2" v-on:click="login()">登陆后添加咖啡店</a>
                 </div>
             </div>
         </div>
@@ -67,7 +67,16 @@
             },
             // 用户信息
             user() {
-                return this.$store.getters.getUsesr;
+                return this.$store.getters.getUser;
+            },
+            // 用户加载状态
+            userLoadStatus() {
+                return this.$store.getters.getUserLoadStatus;
+            }
+        },
+        methods: {
+            login() {
+                EventBus.$emit('prompt-login');
             }
         }
     }
