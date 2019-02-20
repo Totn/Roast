@@ -146,7 +146,7 @@
                 return this.$store.getters.getCafe;
             },
             userLoadStatus() {
-                return this.$store.getters.getUserLoadStatus;
+                return this.$store.getters.getUserLoadStatus();
             },
             user() {
                 return this.$store.getters.getUser;

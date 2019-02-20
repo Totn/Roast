@@ -52,7 +52,10 @@ export const users = {
         },
         
         getUserLoadStatus(state) {
-            return state.userLoadStatus;
+            // store.watch第一个参数只授受函数作为参数
+            return function() {
+                return state.userLoadStatus;
+            }
         }
     }
 }
