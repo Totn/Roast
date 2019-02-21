@@ -52000,7 +52000,7 @@ var CafeTextFilter = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(25);
-module.exports = __webpack_require__(133);
+module.exports = __webpack_require__(138);
 
 
 /***/ }),
@@ -53335,6 +53335,11 @@ function requireAuth(to, from, next) {
             path: 'cafes/:id',
             name: 'cafe',
             component: __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('Cafe', __webpack_require__(118))
+        }, {
+            path: 'profile',
+            name: 'profile',
+            component: __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('Profile', __webpack_require__(133)),
+            beforeEnter: requireAuth
         }]
     }]
 }));
@@ -58458,7 +58463,8 @@ var brewMethods = {
 var users = {
     state: {
         user: {},
-        userLoadStatus: 0
+        userLoadStatus: 0,
+        userUpdateStatus: 0
     },
 
     actions: {
@@ -58482,6 +58488,23 @@ var users = {
                 commit('setUser', {});
                 commit('setUserLoadStatus', 3);
             });
+        },
+
+        // 更新用户信息
+        editUser: function editUser(_ref2, data) {
+            var commit = _ref2.commit,
+                state = _ref2.state,
+                dispatch = _ref2.dispatch;
+
+            // 标记开始更新用户信息
+            commit('setUserUpdateStatus', 1);
+
+            __WEBPACK_IMPORTED_MODULE_0__api_user_js__["a" /* default */].putUpdateUser(data.profile_visibility, data.favorite_coffee, data.flavor_notes, data.city, data.state).then(function (response) {
+                commit('setUserUpdateStatus', 2);
+                dispatch('loadUser');
+            }).catch(function () {
+                commit('setUserUpdateStatus', 3);
+            });
         }
     },
 
@@ -58494,6 +58517,11 @@ var users = {
         // 设置用户数据加载状态
         setUserLoadStatus: function setUserLoadStatus(state, status) {
             state.userLoadStatus = status;
+        },
+
+        // 设置用户更新状态
+        setUserUpdateStatus: function setUserUpdateStatus(state, status) {
+            state.userUpdateStatus = status;
         }
     },
 
@@ -58506,6 +58534,9 @@ var users = {
             return function () {
                 return state.userLoadStatus;
             };
+        },
+        getUserUpdateStatus: function getUserUpdateStatus(state) {
+            return state.userUpdateStatus;
         }
     }
 };
@@ -58524,12 +58555,22 @@ var users = {
 
 /* harmony default export */ __webpack_exports__["a"] = ({
 
-  /**
-   * GET /api/v1/user
-   */
-  getUser: function getUser() {
-    return axios.get(__WEBPACK_IMPORTED_MODULE_0__config_js__["a" /* ROAST_CONFIG */].API_URL + '/user');
-  }
+    /**
+     * GET /api/v1/user
+     */
+    getUser: function getUser() {
+        return axios.get(__WEBPACK_IMPORTED_MODULE_0__config_js__["a" /* ROAST_CONFIG */].API_URL + '/user');
+    },
+
+    putUpdateUser: function putUpdateUser(public_visibility, favorite_coffee, flavor_notes, city, state) {
+        return axios.put(__WEBPACK_IMPORTED_MODULE_0__config_js__["a" /* ROAST_CONFIG */].API_URL + '/user', {
+            profile_visibility: public_visibility,
+            favorite_coffee: favorite_coffee,
+            flavor_notes: flavor_notes,
+            city: city,
+            state: state
+        });
+    }
 });
 
 /***/ }),
@@ -58885,6 +58926,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -58892,7 +58934,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         // 从Vuex中获取用户加载状态
         userLoadStatus: function userLoadStatus() {
-            return this.$store.getters.getUserLoadStatus;
+            return this.$store.getters.getUserLoadStatus();
         },
 
 
@@ -58941,52 +58983,65 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "right" }, [
-        _vm.user !== "" && _vm.userLoadStatus === 2
-          ? _c("img", {
-              directives: [
+      _c(
+        "div",
+        { staticClass: "right" },
+        [
+          _vm.user !== "" && _vm.userLoadStatus === 2
+            ? _c("img", {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.userLoadStatus === 2,
+                    expression: "userLoadStatus === 2"
+                  }
+                ],
+                staticClass: "avatar",
+                attrs: { src: _vm.user.avatar }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.user !== "" && _vm.userLoadStatus === 2
+            ? _c(
+                "router-link",
+                { staticClass: "prifile", attrs: { to: { name: "profile" } } },
+                [_vm._v("个人信息")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.user !== "" && _vm.userLoadStatus === 2
+            ? _c(
+                "span",
                 {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.userLoadStatus === 2,
-                  expression: "userLoadStatus === 2"
-                }
-              ],
-              staticClass: "avatar",
-              attrs: { src: _vm.user.avatar }
-            })
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.user !== "" && _vm.userLoadStatus === 2
-          ? _c(
-              "span",
-              {
-                staticClass: "logout",
-                on: {
-                  click: function($event) {
-                    _vm.logout()
+                  staticClass: "logout",
+                  on: {
+                    click: function($event) {
+                      _vm.logout()
+                    }
                   }
-                }
-              },
-              [_vm._v("退出")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.user === ""
-          ? _c(
-              "span",
-              {
-                staticClass: "login",
-                on: {
-                  click: function($event) {
-                    _vm.login()
+                },
+                [_vm._v("退出")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.user === ""
+            ? _c(
+                "span",
+                {
+                  staticClass: "login",
+                  on: {
+                    click: function($event) {
+                      _vm.login()
+                    }
                   }
-                }
-              },
-              [_vm._v("登陆")]
-            )
-          : _vm._e()
-      ])
+                },
+                [_vm._v("登陆")]
+              )
+            : _vm._e()
+        ],
+        1
+      )
     ],
     1
   )
@@ -63537,6 +63592,522 @@ if (false) {
 
 /***/ }),
 /* 133 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(134)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(136)
+/* template */
+var __vue_template__ = __webpack_require__(137)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/pages/Profile.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-67865b08", Component.options)
+  } else {
+    hotAPI.reload("data-v-67865b08", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 134 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(135);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("47d0bee8", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-67865b08\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Profile.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-67865b08\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Profile.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 135 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\ndiv#profile-page {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: white;\n  z-index: 99999;\n  overflow: auto;\n}\ndiv#profile-page img#back {\n    float: right;\n    margin-top: 20px;\n    margin-right: 20px;\n}\ndiv#profile-page div.centered {\n    margin: auto;\n}\ndiv#profile-page h2.page-title {\n    color: #342C0C;\n    font-size: 36px;\n    font-weight: 900;\n    font-family: \"Lato\", sans-serif;\n    margin-top: 60px;\n}\ndiv#profile-page label.form-label {\n    font-family: \"Lato\", sans-serif;\n    text-transform: uppercase;\n    font-weight: bold;\n    color: black;\n    margin-top: 10px;\n    margin-bottom: 10px;\n}\ndiv#profile-page a.update-profile-button {\n    display: block;\n    text-align: center;\n    height: 50px;\n    color: white;\n    border-radius: 3px;\n    font-size: 18px;\n    font-family: \"Lato\", sans-serif;\n    background-color: #A7BE4D;\n    line-height: 50px;\n    margin-bottom: 50px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 136 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_global_Loader_vue__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_global_Loader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_global_Loader_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        Loader: __WEBPACK_IMPORTED_MODULE_0__components_global_Loader_vue___default.a
+    },
+    data: function data() {
+        return {
+            favorite_coffee: '',
+            flavor_notes: '',
+            profile_visibility: 1,
+            city: '',
+            state: ''
+        };
+    },
+
+    methods: {
+        // 初始化表单
+        setFields: function setFields() {
+            this.favorite_coffee = this.user.favorite_coffee;
+            this.flavor_notes = this.user.flavor_notes;
+            this.profile_visibility = this.user.profile_visibility;
+            this.city = this.user.city;
+            this.state = this.user.state;
+        },
+        updateProfile: function updateProfile() {
+            if (this.validtionProfile()) {
+                this.$store.dispatch('editUser', {
+                    favorite_coffee: this.favorite_coffee,
+                    flavor_notes: this.flavor_notes,
+                    profile_visibility: this.profile_visibility,
+                    city: this.city,
+                    state: this.state
+                });
+            }
+        },
+
+        // 校验数据
+        validtionProfile: function validtionProfile() {
+            return true;
+        }
+    },
+    // 计算属性
+    computed: {
+        user: function user() {
+            return this.$store.getters.getUser;
+        },
+        userLoadStatus: function userLoadStatus() {
+            return this.$store.getters.getUserLoadStatus();
+        },
+        userUpdateStatus: function userUpdateStatus() {
+            return this.$store.getters.getUserUpdateStatus;
+        }
+    },
+    // 监听用户状态变化，用户数据加载成功则初始化表单，用户信息更新成功则显示更新成功文本
+    watch: {
+        'userLoadStatus': function userLoadStatus() {
+            if (this.userLoadStatus === 2) {
+                this.setFields();
+            }
+        },
+        'userUpdateStatus': function userUpdateStatus() {
+            if (this.userUpdateStatus === 2) {
+                $("#profile-updated-successfully").show().delay(5000).fadeOut();
+            }
+        }
+    },
+    // 组件渲染完成之后
+    mounted: function mounted() {
+        // 如果已经完成登陆则初始化表单
+        if (this.userLoadStatus === 2) {
+            this.setFields();
+        }
+    }
+});
+
+/***/ }),
+/* 137 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "page", attrs: { id: "profile" } }, [
+    _c(
+      "div",
+      {
+        directives: [
+          { name: "show", rawName: "v-show", value: false, expression: "false" }
+        ],
+        staticClass: "notification sucess",
+        attrs: { id: "profile-updated-successfully" }
+      },
+      [_vm._v("\n        个人信息更新成功\n    ")]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "grid-container" }, [
+      _c(
+        "div",
+        { staticClass: "grid-x grid-padding-x" },
+        [
+          _c("loader", {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.userLoadStatus === 1,
+                expression: "userLoadStatus === 1"
+              }
+            ],
+            attrs: { width: 100, height: 100 }
+          })
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "grid-container" }, [
+      _c("div", { staticClass: "grid-x grid-padding-x" }, [
+        _c("div", { staticClass: "large-8 medium-10 small-12 cell center" }, [
+          _c("label", [
+            _vm._v("最喜欢的咖啡\n                    "),
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.favorite_coffee,
+                  expression: "favorite_coffee"
+                }
+              ],
+              domProps: { value: _vm.favorite_coffee },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.favorite_coffee = $event.target.value
+                }
+              }
+            })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "grid-x grid-padding-x" }, [
+        _c("div", { staticClass: "large-8 medium-10 small-12 cell center" }, [
+          _c("label", [
+            _vm._v("口味记录\n                    "),
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.flavor_notes,
+                  expression: "flavor_notes"
+                }
+              ],
+              domProps: { value: _vm.flavor_notes },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.flavor_notes = $event.target.value
+                }
+              }
+            })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "grid-x grid-padding-x" }, [
+        _c("div", { staticClass: "large-8 medium-10 small-12 cell center" }, [
+          _c("label", [
+            _vm._v("是否公开个人信息\n                    "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.profile_visibility,
+                    expression: "profile_visibility"
+                  }
+                ],
+                attrs: { id: "public-visibility" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.profile_visibility = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "0" } }, [_vm._v("仅自己可见")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "1" } }, [_vm._v("所有人可见")])
+              ]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "grid-x grid-padding-x" }, [
+        _c("div", { staticClass: "large-8 medium-10 small-12 cell center" }, [
+          _c("label", [
+            _vm._v("所在城市\n                    "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.city,
+                  expression: "city"
+                }
+              ],
+              attrs: { type: "text" },
+              domProps: { value: _vm.city },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.city = $event.target.value
+                }
+              }
+            })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "grid-x grid-padding-x" }, [
+        _c("div", { staticClass: "large-8 medium-10 small-12 cell center" }, [
+          _c("label", [
+            _vm._v("所在省份\n                    "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.state,
+                  expression: "state"
+                }
+              ],
+              attrs: { type: "text" },
+              domProps: { value: _vm.state },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.state = $event.target.value
+                }
+              }
+            })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "grid-x grid-padding-x" }, [
+        _c("div", { staticClass: "large-8 medium-10 small-12 cell center" }, [
+          _c(
+            "a",
+            {
+              staticClass: "button update-profile",
+              on: {
+                click: function($event) {
+                  _vm.updateProfile()
+                }
+              }
+            },
+            [_vm._v("更新个人信息")]
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-67865b08", module.exports)
+  }
+}
+
+/***/ }),
+/* 138 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

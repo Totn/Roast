@@ -10,7 +10,8 @@ import UserAPI from '../api/user.js';
 export const users = {
     state: {
         user: {},
-        userLoadStatus: 0
+        userLoadStatus: 0,
+        userUpdateStatus: 0
     },
 
     actions: {
@@ -32,6 +33,21 @@ export const users = {
                     commit('setUser', {});
                     commit('setUserLoadStatus', 3);
                 });
+        },
+        
+        // 更新用户信息
+        editUser({commit, state, dispatch}, data) {
+            // 标记开始更新用户信息
+            commit('setUserUpdateStatus', 1);
+
+            UserAPI.putUpdateUser(data.profile_visibility, data.favorite_coffee, data.flavor_notes, data.city, data.state)
+                .then(function (response) {
+                    commit('setUserUpdateStatus', 2);
+                    dispatch('loadUser');
+                })
+                .catch(function () {
+                    commit('setUserUpdateStatus', 3);
+                });
         }
     },
 
@@ -40,9 +56,15 @@ export const users = {
         setUser(state, data) {
             state.user = data;
         },
+
         // 设置用户数据加载状态
         setUserLoadStatus(state, status) {
             state.userLoadStatus = status;
+        },
+        
+        // 设置用户更新状态
+        setUserUpdateStatus(state, status) {
+            state.userUpdateStatus = status;
         }
     },
     
@@ -56,6 +78,10 @@ export const users = {
             return function() {
                 return state.userLoadStatus;
             }
+        },
+
+        getUserUpdateStatus(state) {
+            return state.userUpdateStatus;
         }
     }
 }
