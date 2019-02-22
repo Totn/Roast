@@ -27,6 +27,13 @@
                             <input type="text" placeholder="简介" v-model="description">
                         </label>
                     </div>
+
+                    <div class="large-12 medinum-12 samll-12 cell">
+                        <label for="">图片
+                            <input type="file" id="cafe-photo" ref="photo" v-on:change="handleFileUpload()">
+                        </label>
+                    </div>
+
                     <div class="grid-x grid-padding-x" v-for="(location, key) in locations" :key="key">
                         <div class="large-12 medinum-12 samll-12 cell">
                             <h3>位置</h3>
@@ -91,6 +98,7 @@
 <script>
     import TagsInput from "../components/global/forms/TagsInput.vue";
     import { EventBus } from "../event-bus.js";
+
     export default {
         components: {
             TagsInput
@@ -145,7 +153,8 @@
                         locations: this.locations,
                         website: this.website,
                         description: this.description,
-                        roaster: this.roaster
+                        roaster: this.roaster,
+                        picture: this.picture
                     });
                 }
 
@@ -256,6 +265,10 @@
                 this.website = '';
                 this.description = '';
                 this.roaster = false;
+                // 清空图片
+                this.picture = '';
+                this.$refs.photo.value = '';
+
                 this.validations = {
                     name: {
                         is_valid: true,
@@ -274,6 +287,9 @@
 
                 // 清理输入标签
                 EventBus.$emit('clear-tags');
+            },
+            handleFileUpload() {
+                this.picture = this.$refs.photo.files[0];
             }
         },
         watch: {
@@ -286,8 +302,7 @@
 
                 if (this.addCafeStatus === 3) {
                     // 添加失败
-                    $("#cafe-added-unsuccessfully").show().delay(5000).fadeOut();
-                    
+                    $("#cafe-added-unsuccessfully").show().delay(5000).fadeOut(); 
                 }
             }
         }

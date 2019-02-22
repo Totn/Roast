@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Utilities\Tagger;
 use Illuminate\Support\Facades\DB;
+use App\Models\CafePhoto;
 
 
 class CafesController extends Controller
@@ -29,6 +30,7 @@ class CafesController extends Controller
             {
                 $query->select('name');
             }])
+            ->with('photos')
             ->get();
         return response()->json($cafes);
     }
@@ -47,6 +49,7 @@ class CafesController extends Controller
             ->with('brewMethods')
             ->with('likes')
             ->with('tags')
+            ->with('photos')
             ->first();
         return response()->json($cafe);
     }
@@ -65,6 +68,10 @@ class CafesController extends Controller
         $added_cafes = [];
         $locations = $request->input('locations');
 
+        if (is_string($locations)) {
+            $locations = json_decode($locations, true);
+        }
+
         // 总店/父节点
         $parent_cafe = new Cafe();
         
@@ -80,6 +87,7 @@ class CafesController extends Controller
         $parent_cafe->state = $locations[0]['state'];
         // 分店邮政编码
         $parent_cafe->zip = $locations[0]['zip'];
+
         $coordinates = GaodeMaps::geocodeAddress($parent_cafe->address, $parent_cafe->city, $parent_cafe->state);
         // 纬度
         $parent_cafe->latitude = $coordinates['lat'];
@@ -94,6 +102,31 @@ class CafesController extends Controller
         // 添加者
         $parent_cafe->added_by = $request->user()->id;
         $parent_cafe->save();
+
+        // 由请求实例中获取上传图片并将其保存到$destination_path目录下，同时保存记录到cafes_photos表
+        $photo = $request->file('picture');
+        if ($photo && $photo->isValid()) {
+            $destination_path = storage_path('app/public/photos/' . $parent_cafe->id);
+
+            // 若目录目录不存在，则创建
+            if (!file_exists($destination_path)) {
+                mkdir($destination_path);
+            }
+
+            // 文件名
+            $file_name = time() . '-' . $photo->getClientOriginalName();
+            // 保存文件到目标目录
+            $photo->move($destination_path, $file_name);
+
+            // 在数据中创建新记录保存刚刚上传文件的路径
+            $cafe_photo = new CafePhoto();
+
+            $cafe_photo->cafe_id = $parent_cafe->id;
+            $cafe_photo->uploaded_by = Auth::user()->id;
+            $cafe_photo->file_url = $destination_path . DIRECTORY_SEPARATOR . $file_name;
+
+            $cafe_photo->save();
+        }
 
         // 冲泡方法
         $brew_methods = $locations[0]['methodsAvailable'];

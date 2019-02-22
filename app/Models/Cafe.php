@@ -33,4 +33,14 @@ class Cafe extends Model
     {
         return $this->belongsToMany(Tag::class, 'cafes_users_tags', 'cafe_id', 'tag_id');
     }
+
+    /**
+     * 定义与表cafes_photos的关系
+     *
+     * @return void
+     */
+    public function photos()
+    {
+        return $this->hasMany(CafePhoto::class, 'cafe_id', 'id');
+    }
 }

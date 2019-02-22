@@ -29,15 +29,22 @@ export default {
      * @param {string} state 
      * @param {string} zip 
      */
-    postAddNewCafe: function (name, locations, website, description, roaster) {
-        return axios.post(ROAST_CONFIG.API_URL + '/cafes',
-        {
-            name: name,
-            locations: locations,
-            website: website,
-            description: description,
-            roaster: roaster
-        });
+    postAddNewCafe: function (name, locations, website, description, roaster, picture) {
+        let data = new FormData();
+        let config  = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        };
+        data.append('name', name);
+        data.append('locations', JSON.stringify(locations));
+        data.append('website', website);
+        data.append('description', description);
+        data.append('roaster', roaster);
+        data.append('picture', picture);
+        console.log(data);
+
+        return axios.post(ROAST_CONFIG.API_URL + '/cafes', data, config);
     },
 
     /**
