@@ -30,7 +30,8 @@ class CafesController extends Controller
             {
                 $query->select('name');
             }])
-            ->with('photos')
+            ->with('company')
+            ->withCount('likes')
             ->get();
         return response()->json($cafes);
     }
@@ -47,9 +48,13 @@ class CafesController extends Controller
     {
         $cafe = Cafe::where('id', '=', $id)
             ->with('brewMethods')
-            ->with('likes')
+            ->withCount('likes')
             ->with('tags')
             ->with('photos')
+            ->with(['company' => function ($query)
+            {
+                $query->withCount('cafes');
+            }])
             ->first();
         return response()->json($cafe);
     }

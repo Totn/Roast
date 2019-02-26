@@ -47,3 +47,13 @@ Route::get('/set-tags/{id}/{tags}', function ($id, $tags)
 
     return \App\Utilities\Tagger::tagCafe($cafe, $tags, 1);
 });
+
+// test photos
+Route::get('/photos/{id}', function ($id)
+{
+    $photo = \App\Models\CafePhoto::where('id', '=', $id)
+        ->with('cafe')
+        ->with('user')
+        ->first();
+    return print_r($photo->toArray(), true);
+});

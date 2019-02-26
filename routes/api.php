@@ -54,18 +54,48 @@ Route::group(['prefix' => 'v1'], function ()
     | Search The Tags
     |--------------------------------------------------------------------------
     | URL:  /api/v1/tags
-    | Controller: API\TagsController@tags
+    | Controller: API\TagsController@gettags
     | Method: GET
     | Description:  provide support to Tags's Search
     */
     Route::get('/tags', "API\TagsController@getTags");
 
+    /*
+    |--------------------------------------------------------------------------
+    | Get The User Data
+    |--------------------------------------------------------------------------
+    | URL:  /api/v1/user
+    | Controller: API\UsersController@getUser
+    | Method: GET
+    | Description:  Get The Authorize User's Data
+    */
     Route::get('/user', 'API\UsersController@getUser');
-    // Route::get('/user', function (Request $request) {
-    //     return $request->user();
-    // });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Get All The Cities's Data
+    |--------------------------------------------------------------------------
+    | URL:  /api/v1/cities
+    | Controller: API\UsersController@getCities
+    | Method: GET
+    | Description:  Get All The Cities's Data
+    */
+    Route::get('/cities', 'API\CitiesController@getCities');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Get The Special City Data
+    |--------------------------------------------------------------------------
+    | URL:  /api/v1/cities/{slug}
+    | Controller: API\UsersController@getCity
+    | Method: GET
+    | Description:  Get The Special City Data About Slug
+    */
+    Route::get('/cities/{slug}', 'API\CitiesController@getCity');
+
 });
 
+// 私有路由，验证登陆之后才能访问
 Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
 
     /*

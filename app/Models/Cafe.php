@@ -43,4 +43,15 @@ class Cafe extends Model
     {
         return $this->hasMany(CafePhoto::class, 'cafe_id', 'id');
     }
+
+    /**
+     * Cafe与Company的关系
+     *
+     * @param Type $var
+     * @return void
+     */
+    public function companiesOwned(Type $var = null)
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id');
+    }
 }

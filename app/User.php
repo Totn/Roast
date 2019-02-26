@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use App\Models\Cafe;
 use App\Models\CafePhoto;
+use App\Models\Company;
 
 class User extends Authenticatable
 {
@@ -44,5 +45,15 @@ class User extends Authenticatable
     public function cafePhotos()
     {
         return $this->hasMany(CafePhoto::class, 'uploaded_by', 'id');
+    }
+
+    /**
+     * 用户User与Company的关系
+     *
+     * @return void
+     */
+    public function comaniesOwned()
+    {
+        return $this->belongsToMany(Company::class, 'company_owners', 'user_id', 'company_id');
     }
 }
